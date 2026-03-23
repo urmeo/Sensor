@@ -78,7 +78,7 @@ Question-level responses from Session 1 (June 13 only).
 | `Test` | string | `HADS`, `STAI-S`, `STAI-T`, `BFI`, `FQ` | Psychometric test name |
 | `Question` | string | — | Full question text |
 | `Answer` | string | — | Selected answer (text) |
-| *(unlabeled)* | int | 1–6 | Numeric score. **Note:** the CSV header is missing this column name — it's the 4th field. |
+| `Score` | int | 1–6 | Numeric score for that question |
 | `Time(s)` | float | 2.016–22.737 | Response time in seconds |
 | `Question Start Time` | ISO datetime | — | When the question was displayed |
 | `Question Answer Time` | ISO datetime | — | When the participant submitted their answer |
@@ -86,7 +86,7 @@ Question-level responses from Session 1 (June 13 only).
 **Notes:**
 - 88 rows: HADS (14), STAI-S (20), STAI-T (20), BFI (10), FQ (24).
 - Only Session 1 data. Sessions 2 and 3 questionnaire data is not in this folder.
-- The header declares 6 columns but each data row has 7 fields due to the missing Score header.
+- 7 columns including Score.
 
 ---
 
@@ -104,7 +104,7 @@ Raw eye tracking data from the Pupil Labs Core, recorded at ~60 Hz. The "sed" fi
 | `headYaw`, `headPitch`, `headRoll` | float | all 0.0 | Head rotation angles (not tracked) |
 | `headRotQ` | float | 0.0 | Head rotation quality |
 | `gazeSrc.x`, `gazeSrc.y`, `gazeSrc.z` | float | ~−0.02 to 0.01 | Gaze origin point (eye position in tracker coordinates) |
-| `gaze_x`, `gaze_y`, `gaze_z` | float | ~−0.3 to 1.0 | Gaze direction unit vector |
+| `gazeDir.x`, `gazeDir.y`, `gazeDir.z` | float | ~−0.3 to 1.0 | Gaze direction unit vector |
 | `gazeQ` | float | 0.11–1.0 | Gaze tracking quality (1.0 = best) |
 | `leftEyeOpen` | float | 0.0–10.0 | Left eye openness (0 = closed, 10 = fully open) |
 | `leftEyeOpenQ` | float | 0.0–1.0 | Left eye openness quality |

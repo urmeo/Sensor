@@ -1,5 +1,7 @@
 # Sensor
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Review of **10 sensors** and **2 software platforms** used in our anxiety detection research — eye tracking, heart rate, skin conductance, video, and motion capture. Includes specs, comparisons, and sample data.
 
 ---
@@ -201,6 +203,10 @@ The `Sensor's data/` folder has CSVs from psychometric testing sessions (2024-06
 
 ## Quick Start
 
+```bash
+pip install -r requirements.txt
+```
+
 See [`analysis/explore_data.ipynb`](analysis/explore_data.ipynb) for a walkthrough that loads each CSV and plots heart rate, pupil dilation, fixation durations, and HRV metrics from the sample session.
 
 ---
@@ -229,6 +235,25 @@ Pupil Labs Core · Polar H10+ · Moofit HW401 · TEA CAPTIV T-SENS · Empatica E
 ## Topics
 
 Biometric Sensors · Eye Tracking · Heart Rate Variability · Galvanic Skin Response · Electrodermal Activity · Anxiety Detection · Psychometric Testing · Multimodal Sensing · OpenFace · Pupil Labs
+
+## Citation
+
+If you use this resource, please cite:
+
+```
+Bose, U. (2025). Sensor: Biometric Sensor Review for Anxiety Detection Research.
+GitHub. https://github.com/urme-b/Sensor
+```
+
+```bibtex
+@misc{bose2025sensor,
+  author       = {Bose, Urme},
+  title        = {Sensor: Biometric Sensor Review for Anxiety Detection Research},
+  year         = {2025},
+  url          = {https://github.com/urme-b/Sensor},
+  note         = {Review of 10 sensors and 2 software platforms for multimodal anxiety detection}
+}
+```
 
 ## License
 

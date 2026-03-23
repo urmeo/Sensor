@@ -1,4 +1,4 @@
-Test,Question,Answer,Time(s),Question Start Time,Question Answer Time
+Test,Question,Answer,Score,Time(s),Question Start Time,Question Answer Time
 HADS,1. I feel tense or 'wound up':,From time to time; occasionally,1,12.735,2024-06-13T11:30:18.058Z,2024-06-13T11:30:30.793Z
 HADS,2. I still enjoy the things I used to enjoy:,Not quite so much,1,7.92,2024-06-13T11:30:30.793Z,2024-06-13T11:30:38.713Z
 HADS,3. I get a sort of frightened feeling as if something awful is about to happen:,Yes; but not too badly,2,7.864,2024-06-13T11:30:38.713Z,2024-06-13T11:30:46.577Z

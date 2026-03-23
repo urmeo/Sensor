@@ -4,3 +4,16 @@ Thumbs.db
 
 # Backups
 Sensor_bak/
+
+# Environment
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+.claude/
