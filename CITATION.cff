@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this resource, please cite it as below."
+type: dataset
+title: "Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research"
+version: 0.1.0
+date-released: 2026-06-15
+url: "https://github.com/urme-b/Sensor"
+repository-code: "https://github.com/urme-b/Sensor"
+license: MIT
+authors:
+  - family-names: Bose
+    given-names: Urme
+    alias: urme-b
+keywords:
+  - anxiety-detection
+  - biometric-sensors
+  - eye-tracking
+  - heart-rate-variability
+  - electrodermal-activity
+  - galvanic-skin-response
+  - multimodal-sensing
+  - psychometric-testing
+abstract: >-
+  A comparative review of ten sensors and two software platforms used
+  in anxiety-detection research, spanning eye tracking, heart rate,
+  skin conductance, video, and motion capture. Includes device
+  specifications, comparisons, and sample physiological data.
