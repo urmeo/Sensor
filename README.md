@@ -1,5 +1,6 @@
 # Sensor
 
+[![CI](https://github.com/urme-b/Sensor/actions/workflows/ci.yml/badge.svg)](https://github.com/urme-b/Sensor/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Review of **10 sensors** and **2 software platforms** used in our anxiety detection research — eye tracking, heart rate, skin conductance, video, and motion capture. Includes specs, comparisons, and sample data.
