@@ -53,7 +53,7 @@ Continuous heart rate readings from chest-strap sensors, sampled at ~2 Hz per se
 
 ## ibi.csv
 
-Beat-to-beat inter-beat intervals from the chest-strap sensors. These are the raw intervals between successive heartbeats, used to derive HRV metrics like RMSSD and SDNN.
+Interval series from the heart-rate sensors. Note: these values are quantized and heavily forward-filled (most successive differences are exactly 0 ms), so they are **not** true beat-to-beat R-R intervals and are unsuitable for reliable time-domain HRV (RMSSD/SDNN).
 
 | Column | Type | Range | Description |
 |--------|------|-------|-------------|
