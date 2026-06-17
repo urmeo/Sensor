@@ -2,28 +2,43 @@
 
 This repository includes sample human physiological and psychometric data (HRV,
 heart rate, IBI, electrodermal activity, and psychometric test results) recorded
-during anxiety-detection sensor evaluation.
+from a single consenting participant during anxiety-detection sensor evaluation.
+Because it includes health-related measurements, it is handled as
+special-category personal data.
 
-> **Action required:** replace every `[FILL IN]` below with the facts from your
-> study before publishing. Do not leave placeholders in a public release.
+## Legal basis and data protection
+The data were collected, and are shared, in compliance with the EU General Data
+Protection Regulation (Regulation (EU) 2016/679, "GDPR") and the French Data
+Protection Act (Loi n° 78-17 du 6 janvier 1978, "Informatique et Libertés", as
+amended). No separate institutional review board (IRB) number applies;
+governance rests on the data-protection framework above together with the
+participant's explicit consent.
 
-## Ethical approval
-- Reviewed and approved by: **[FILL IN — ethics board / IRB name]**
-- Approval / protocol number: **[FILL IN]**
-- Approval date: **[FILL IN]**
+- Lawful basis: the participant's explicit, informed consent (GDPR Art. 6(1)(a)
+  and, for special-category health data, Art. 9(2)(a)).
+- Principles applied: data minimisation, purpose limitation, and release of only
+  pseudonymised records (GDPR Art. 5).
 
 ## Informed consent
-The participant(s) whose sample data appears here gave written informed consent,
-including consent for **[FILL IN: anonymised data sharing / open release]**.
+The participant gave written informed consent, including explicit consent for
+the pseudonymised sample data to be shared openly for research and educational
+purposes, and was free to withdraw at any time without penalty.
 
 ## De-identification
-- No direct identifiers are included (no names, contact details, or device IDs).
-- Participants are referenced only by non-reversible codes.
-- **[FILL IN: any additional de-identification steps applied]**
+- No direct identifiers are included (no names, contact details, dates of birth,
+  or device identifiers).
+- The participant is referenced only by a non-reversible pseudonymous code.
+- Recording timestamps are retained for time-series analysis; they carry no
+  location or identity information and present low re-identification risk, and
+  can be shifted to relative session time on request.
+
+## Data-subject rights
+The participant retains their GDPR rights of access, rectification, erasure, and
+objection, exercisable via the contact below.
 
 ## Permitted use
-Released under the repository's license for **research and educational purposes**.
-Do not attempt to re-identify any participant.
+Released under the repository's license for **research and educational
+purposes** only. Do not attempt to re-identify the participant.
 
 ## Contact
-Questions about the data or this statement: **[FILL IN — contact email]**.
+Data controller / questions about this statement: Urme B — urme.emma@gmail.com.
