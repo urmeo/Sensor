@@ -1,6 +1,6 @@
 # Sensor
 
-Review of **10 sensors** and **2 software platforms** used in our anxiety detection research — eye tracking, heart rate, skin conductance, video, and motion capture. Includes specs, comparisons, and sample data.
+Review of **11 sensors** and **2 software platforms** used in our anxiety detection research — eye tracking, heart rate, skin conductance, video, and motion capture. Includes specs, comparisons, and sample data.
 
 ---
 
@@ -221,7 +221,6 @@ See [`analysis/explore_data.ipynb`](analysis/explore_data.ipynb) for a walkthrou
 ## Related Repos
 
 - [Multimodal-Multisensor](https://github.com/urme-b/Multimodal-Multisensor) — Longitudinal study using these sensors
-- [Multimodal](https://github.com/urme-b/Multimodal) — Analysis of the collected data
 - [CalmSense](https://github.com/urme-b/CalmSense) — Stress detection system built on multimodal signals
 
 ---
@@ -239,17 +238,17 @@ Biometric Sensors · Eye Tracking · Heart Rate Variability · Galvanic Skin Res
 If you use this resource, please cite:
 
 ```
-Bose, U. (2025). Sensor: Biometric Sensor Review for Anxiety Detection Research.
+Bose, U. (2026). Sensor: Biometric Sensor Review for Anxiety Detection Research.
 GitHub. https://github.com/urme-b/Sensor
 ```
 
 ```bibtex
-@misc{bose2025sensor,
+@misc{bose2026sensor,
   author       = {Bose, Urme},
   title        = {Sensor: Biometric Sensor Review for Anxiety Detection Research},
-  year         = {2025},
+  year         = {2026},
   url          = {https://github.com/urme-b/Sensor},
-  note         = {Review of 10 sensors and 2 software platforms for multimodal anxiety detection}
+  note         = {Review of 11 sensors and 2 software platforms for multimodal anxiety detection}
 }
 ```
 
