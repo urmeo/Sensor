@@ -13,6 +13,10 @@ updates:
     groups:
       python:
         patterns: ["*"]
+    ignore:
+      # numpy >= 2.5 requires Python >= 3.12; drop when 3.11 leaves the CI matrix
+      - dependency-name: "numpy"
+        versions: [">=2.5.0"]
 
   # GitHub Actions used in the workflows
   - package-ecosystem: "github-actions"
