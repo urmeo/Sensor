@@ -218,6 +218,10 @@ See [`analysis/explore_data.ipynb`](analysis/explore_data.ipynb) for a walkthrou
 
 ---
 
+## Ethics & Data
+
+The `Sensor's data/` folder holds sample human physiological and psychometric recordings from a single consenting participant, collected during anxiety-detection sensor evaluation. The participant gave written informed consent, including consent to share the pseudonymised sample openly for research and educational use. No direct identifiers are included (no names, contact details, dates of birth, or device identifiers), and the data are handled as special-category personal data under the GDPR and the French Data Protection Act. No IRB number applies; governance rests on that data-protection framework plus explicit consent. Intended for research and educational use only; do not attempt to re-identify the participant. Full statement: [DATA_ETHICS.md](DATA_ETHICS.md).
+
 ## Related Repos
 
 - [Multimodal-Multisensor](https://github.com/urme-b/Multimodal-Multisensor) — Longitudinal study using these sensors
