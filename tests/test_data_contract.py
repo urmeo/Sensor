@@ -9,13 +9,25 @@ import json
 from pathlib import Path
 
 import pandas as pd
+import pandas.api.types as pdt
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 PKG = json.loads((ROOT / "datapackage.json").read_text())
 RESOURCES = {r["name"]: r for r in PKG["resources"]}
 
-TYPE_KINDS = {"integer": "i", "number": "if", "boolean": "b", "string": "O"}
+
+def _dtype_ok(series, declared_type):
+    """Version-stable type check (pandas 2.x object strings and 3.x str dtype)."""
+    if declared_type == "integer":
+        return pdt.is_integer_dtype(series)
+    if declared_type == "number":
+        return pdt.is_numeric_dtype(series) and not pdt.is_bool_dtype(series)
+    if declared_type == "boolean":
+        return pdt.is_bool_dtype(series)
+    if declared_type == "string":
+        return pdt.is_string_dtype(series) or series.dtype == object
+    return False
 
 
 def _load(resource):
@@ -38,7 +50,7 @@ def test_field_types_required_ranges_enums(name):
     for f in r["schema"]["fields"]:
         col, typ, cons = f["name"], f["type"], f.get("constraints", {})
         series = df[col]
-        assert series.dtype.kind in TYPE_KINDS[typ], f"{name}.{col}: {series.dtype} not a {typ}"
+        assert _dtype_ok(series, typ), f"{name}.{col}: {series.dtype} not a {typ}"
         if cons.get("required"):
             assert series.notna().all(), f"{name}.{col}: has nulls but is required"
         valued = series.dropna()
