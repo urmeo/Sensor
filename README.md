@@ -181,6 +181,7 @@ From `Threshold.pdf` — literature-based thresholds used for detecting anxiety:
 | `OpenFace vs Noldus.pdf` | Facial analysis software comparison |
 | `Experiment Scenario.pdf` | Experimental protocol |
 | `Threshold.pdf` | Anxiety detection thresholds with references |
+| `Sensor Documentation.pdf` | Consolidated sensor reference documentation |
 
 ---
 
@@ -190,12 +191,12 @@ The `Sensor's data/` folder has CSVs from psychometric testing sessions (2024-06
 
 | File | Rows | Description |
 |------|------|-------------|
-| `HRV.csv` | 265 | Per-question biometric summary — pupil dilation & blink rates aggregated per question across all 3 sessions. **Note:** despite the filename, this file contains eye tracking metrics, not raw HRV data. See [`DATA_DICTIONARY.md`](Sensor's%20data/DATA_DICTIONARY.md) for column details. |
-| `hr.csv` | 4033 | Heart rate from multiple sensors (Polar H10+, Moofit) with confidence scores |
-| `ibi.csv` | 2395 | Inter-beat interval series |
+| `HRV.csv` | 264 | Per-question biometric summary — pupil dilation & blink rates aggregated per question across all 3 sessions. **Note:** despite the filename, this file contains eye tracking metrics, not raw HRV data. See [`DATA_DICTIONARY.md`](Sensor's%20data/DATA_DICTIONARY.md) for column details. |
+| `hr.csv` | 4032 | Heart rate from multiple sensors (Polar H10+, Moofit) with confidence scores |
+| `ibi.csv` | 2394 | Inter-beat interval series |
 | `Psychometric_Test_Results.csv` | 88 | Question-level responses (HADS, STAI-S, STAI-T, FQ, BFI) with timestamps |
-| `sed.csv` | 34172 | Raw eye tracking — head position, gaze direction, pupil size, eye openness |
-| `sed_fix.csv` | 34172 | Processed eye tracking — adds gaze difference, fixation detection, fixation duration |
+| `sed.csv` | 34171 | Raw eye tracking — head position, gaze direction, pupil size, eye openness |
+| `sed_fix.csv` | 34171 | Processed eye tracking — adds gaze difference, fixation detection, fixation duration |
 
 ---
 
