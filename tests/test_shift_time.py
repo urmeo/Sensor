@@ -1,4 +1,5 @@
 """The de-identified variant must contain no absolute calendar timestamps."""
+
 import sensor_data as sd
 from scripts import shift_time
 

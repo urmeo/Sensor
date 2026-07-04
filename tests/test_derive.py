@@ -1,4 +1,5 @@
 """The derivation pipeline must reproduce the committed sed_fix.csv exactly."""
+
 import numpy as np
 
 import sensor_data as sd

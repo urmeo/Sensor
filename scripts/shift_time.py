@@ -14,6 +14,7 @@ timestamp is replaced by seconds-since-session-start:
 
 Run: `python scripts/shift_time.py`  (writes data/relative/, git-ignored).
 """
+
 import pandas as pd
 
 import sensor_data as sd
@@ -35,8 +36,10 @@ def to_relative(df, name):
         return df.drop(columns=["Start Time", "End Time"])
     if name == "psych":
         base = pd.to_datetime(df["Question Start Time"], format="mixed").min()
-        for src, dst in [("Question Start Time", "Question Start (s)"),
-                         ("Question Answer Time", "Question Answer (s)")]:
+        for src, dst in [
+            ("Question Start Time", "Question Start (s)"),
+            ("Question Answer Time", "Question Answer (s)"),
+        ]:
             df[dst] = (pd.to_datetime(df[src], format="mixed") - base).dt.total_seconds()
         return df.drop(columns=["Question Start Time", "Question Answer Time"])
     return df

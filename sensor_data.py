@@ -3,6 +3,7 @@
 Keeps data-access logic in one place so the analysis notebook and the test
 suite share the same loading and filtering rules instead of copy-pasting them.
 """
+
 from pathlib import Path
 
 import pandas as pd
@@ -43,9 +44,5 @@ def valid_pupil(sed, min_quality=0.5):
 
 def fixation_durations(sed_fix):
     """One duration in seconds per detected fixation."""
-    durations = (
-        sed_fix[sed_fix["fixation"] == True]
-        .groupby("fixation_id")["duration"]
-        .max()
-    )
+    durations = sed_fix[sed_fix["fixation"]].groupby("fixation_id")["duration"].max()
     return durations[durations > 0]

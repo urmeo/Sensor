@@ -5,6 +5,7 @@ Frictionless data package is verified against the real data, plus a handful of
 cross-file invariants the data dictionary asserts. If the data drifts from its
 documented schema, these tests fail.
 """
+
 import json
 from pathlib import Path
 
@@ -72,7 +73,11 @@ def test_hrv_is_88_questions_times_3_sessions():
 def test_psychometric_test_composition():
     df = _load(RESOURCES["psych"])
     assert df["Test"].value_counts().to_dict() == {
-        "FQ": 24, "STAI-S": 20, "STAI-T": 20, "HADS": 14, "BFI": 10,
+        "FQ": 24,
+        "STAI-S": 20,
+        "STAI-T": 20,
+        "HADS": 14,
+        "BFI": 10,
     }
 
 
@@ -90,6 +95,7 @@ def test_sensor_files_share_one_recording_window():
 def test_sed_fix_is_a_superset_of_sed():
     sed = _load(RESOURCES["sed"])
     sed_fix = _load(RESOURCES["sed_fix"])
+    derived_cols = {"gaze_diff", "fixation", "fixation_id", "duration"}
     assert len(sed) == len(sed_fix)
     assert set(sed.columns).issubset(sed_fix.columns)
-    assert set(sed_fix.columns) - set(sed.columns) == {"gaze_diff", "fixation", "fixation_id", "duration"}
+    assert set(sed_fix.columns) - set(sed.columns) == derived_cols

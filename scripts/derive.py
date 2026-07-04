@@ -33,10 +33,10 @@ shipped as an unverifiable derivation.
 Run `python scripts/derive.py --check` to confirm the pipeline still matches the
 committed file.
 """
+
 import sys
 
 import numpy as np
-import pandas as pd
 
 import sensor_data as sd
 
@@ -84,9 +84,9 @@ def check(base=None):
 
 if __name__ == "__main__":
     if "--check" in sys.argv:
-        print("reproduces sed_fix.csv exactly:" , check())
+        print("reproduces sed_fix.csv exactly:", check())
     else:
         out = detect_fixations(sd.load("sed"))
-        dest = sensor_data_path = sd.DATA_DIR / "sed_fix.csv"
+        dest = sd.DATA_DIR / "sed_fix.csv"
         out.to_csv(dest, index=False)
         print(f"wrote {dest} ({len(out)} rows)")

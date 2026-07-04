@@ -38,6 +38,17 @@ jobs:
       - name: Execute notebook (smoke test)
         run: pytest --nbmake --nbmake-timeout=600 "analysis/explore_data.ipynb"
 
+  lint:
+    name: Lint & format (ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pipx run ruff check .
+      - run: pipx run ruff format --check .
+
   links:
     name: Check Markdown links
     runs-on: ubuntu-latest
