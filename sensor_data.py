@@ -4,13 +4,15 @@ Keeps data-access logic in one place so the analysis notebook and the test
 suite share the same loading and filtering rules instead of copy-pasting them.
 """
 
+from __future__ import annotations
+
 from pathlib import Path
 
 import pandas as pd
 
-DATA_DIR = Path(__file__).resolve().parent / "data"
+DATA_DIR: Path = Path(__file__).resolve().parent / "data"
 
-CSV_FILES = {
+CSV_FILES: dict[str, str] = {
     "hr": "hr.csv",
     "ibi": "ibi.csv",
     "sed": "sed.csv",
@@ -20,29 +22,29 @@ CSV_FILES = {
 }
 
 
-def data_dir(base=None):
+def data_dir(base: str | Path | None = None) -> Path:
     return Path(base) if base is not None else DATA_DIR
 
 
-def load(name, base=None):
+def load(name: str, base: str | Path | None = None) -> pd.DataFrame:
     return pd.read_csv(data_dir(base) / CSV_FILES[name])
 
 
-def load_all(base=None):
+def load_all(base: str | Path | None = None) -> dict[str, pd.DataFrame]:
     return {name: load(name, base) for name in CSV_FILES}
 
 
-def valid_hr(hr):
+def valid_hr(hr: pd.DataFrame) -> pd.DataFrame:
     """Heart-rate rows the sensor was confident about."""
     return hr[hr["confidence"] == 1.0].copy()
 
 
-def valid_pupil(sed, min_quality=0.5):
+def valid_pupil(sed: pd.DataFrame, min_quality: float = 0.5) -> pd.DataFrame:
     """Eye-tracking rows with a real pupil reading (drops tracking loss)."""
     return sed[(sed["pupil"] > 0) & (sed["pupilQ"] > min_quality)].copy()
 
 
-def fixation_durations(sed_fix):
+def fixation_durations(sed_fix: pd.DataFrame) -> pd.Series:
     """One duration in seconds per detected fixation."""
     durations = sed_fix[sed_fix["fixation"]].groupby("fixation_id")["duration"].max()
     return durations[durations > 0]

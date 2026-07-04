@@ -15,14 +15,16 @@ timestamp is replaced by seconds-since-session-start:
 Run: `python scripts/shift_time.py`  (writes data/relative/, git-ignored).
 """
 
+from __future__ import annotations
+
 import pandas as pd
 
 import sensor_data as sd
 
-SENSOR_FILES = {"hr", "ibi", "sed", "sed_fix"}
+SENSOR_FILES: set[str] = {"hr", "ibi", "sed", "sed_fix"}
 
 
-def to_relative(df, name):
+def to_relative(df: pd.DataFrame, name: str) -> pd.DataFrame:
     """Return a copy of `df` with absolute calendar timestamps removed."""
     df = df.copy()
     if name in SENSOR_FILES:
@@ -45,7 +47,7 @@ def to_relative(df, name):
     return df
 
 
-def main():
+def main() -> None:
     out_dir = sd.DATA_DIR / "relative"
     out_dir.mkdir(exist_ok=True)
     for name, filename in sd.CSV_FILES.items():

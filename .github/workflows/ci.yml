@@ -39,7 +39,7 @@ jobs:
         run: pytest --nbmake --nbmake-timeout=600 "analysis/explore_data.ipynb"
 
   lint:
-    name: Lint & format (ruff)
+    name: Lint, format & types
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -48,6 +48,7 @@ jobs:
           python-version: "3.12"
       - run: pipx run ruff check .
       - run: pipx run ruff format --check .
+      - run: pipx run mypy sensor_data.py scripts
 
   links:
     name: Check Markdown links

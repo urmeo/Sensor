@@ -34,17 +34,21 @@ Run `python scripts/derive.py --check` to confirm the pipeline still matches the
 committed file.
 """
 
+from __future__ import annotations
+
 import sys
+from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 import sensor_data as sd
 
-THRESHOLD = 0.01
-DERIVED_COLUMNS = ["gaze_diff", "fixation", "fixation_id", "duration"]
+THRESHOLD: float = 0.01
+DERIVED_COLUMNS: list[str] = ["gaze_diff", "fixation", "fixation_id", "duration"]
 
 
-def detect_fixations(sed, threshold=THRESHOLD):
+def detect_fixations(sed: pd.DataFrame, threshold: float = THRESHOLD) -> pd.DataFrame:
     """Add fixation columns to a raw `sed` frame and return the `sed_fix` frame."""
     df = sed.copy()
 
@@ -65,7 +69,7 @@ def detect_fixations(sed, threshold=THRESHOLD):
     return df
 
 
-def check(base=None):
+def check(base: str | Path | None = None) -> bool:
     """Return True if detect_fixations(sed) reproduces the committed sed_fix."""
     derived = detect_fixations(sd.load("sed", base))
     committed = sd.load("sed_fix", base)
