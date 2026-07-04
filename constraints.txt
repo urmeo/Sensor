@@ -1,0 +1,7 @@
+# Pinned runtime versions for reproducible CI / notebook execution.
+# requirements.txt keeps >= floors for library users; CI installs with
+#   pip install -r requirements.txt -c constraints.txt
+# so the notebook renders against a fixed matplotlib/numpy/pandas each run.
+numpy~=2.0.2
+pandas~=2.2.3
+matplotlib~=3.9.4

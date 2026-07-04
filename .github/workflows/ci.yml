@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Test (Python ${{ matrix.python-version }})
@@ -24,14 +28,25 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -r requirements-dev.txt
+          pip install -r requirements.txt -c constraints.txt
+          pip install -r requirements-dev.txt -c constraints.txt
 
       - name: Validate data and notebooks
         run: pytest tests/ -q
 
       - name: Execute notebook (smoke test)
         run: pytest --nbmake --nbmake-timeout=600 "analysis/explore_data.ipynb"
+
+  links:
+    name: Check Markdown links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: lychee link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: "--no-progress --max-concurrency 4 './**/*.md'"
+        continue-on-error: true  # advisory-only rollout; remove to make dead links block the build
 
   security:
     name: Dependency audit (pip-audit)
@@ -45,7 +60,7 @@ jobs:
       - name: Install project + pip-audit
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt -c constraints.txt
           pip install pip-audit
       - name: Audit installed dependencies
         run: pip-audit --desc
