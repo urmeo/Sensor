@@ -1,0 +1,864 @@
+{
+  "name": "sensor-anxiety-detection-sample",
+  "title": "Sensor — Biometric Sensor Sample Dataset",
+  "description": "Sample multimodal physiological and psychometric recordings from a single consenting participant (see DATA_ETHICS.md). Machine-readable schema for the CSVs in data/. Full prose reference: data/DATA_DICTIONARY.md.",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "profile": "tabular-data-package",
+  "resources": [
+    {
+      "name": "hr",
+      "path": "data/hr.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "rowCount": 4032,
+      "schema": {
+        "fields": [
+          {
+            "name": "reltime",
+            "type": "number",
+            "description": "Seconds since recording start.",
+            "constraints": {
+              "required": true,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "datetime",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "iSensor",
+            "type": "integer",
+            "description": "Sensor index (0-5).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 5
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "description": "Signal quality (1.0 valid, 0.0 no signal).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "heart_rate",
+            "type": "number",
+            "description": "Heart rate in BPM (0 = no lock).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 300
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ibi",
+      "path": "data/ibi.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "rowCount": 2394,
+      "schema": {
+        "fields": [
+          {
+            "name": "reltime",
+            "type": "number",
+            "description": "Seconds since recording start.",
+            "constraints": {
+              "required": true,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "datetime",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "iSensor",
+            "type": "integer",
+            "description": "Sensor index (0-5).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 5
+            }
+          },
+          {
+            "name": "ibi",
+            "type": "integer",
+            "description": "Inter-beat interval in ms (0 = init row; quantized, not true R-R).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 3000
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "sed",
+      "path": "data/sed.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "rowCount": 34171,
+      "schema": {
+        "fields": [
+          {
+            "name": "reltime",
+            "type": "number",
+            "description": "Seconds since recording start.",
+            "constraints": {
+              "required": true,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "datetime",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "iSensor",
+            "type": "integer",
+            "description": "Eye-tracker sensor index (always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPos.x",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPos.y",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPos.z",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPosQ",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headYaw",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPitch",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headRoll",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headRotQ",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "gazeSrc.x",
+            "type": "number",
+            "description": "Gaze origin point in tracker coordinates.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeSrc.y",
+            "type": "number",
+            "description": "Gaze origin point in tracker coordinates.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeSrc.z",
+            "type": "number",
+            "description": "Gaze origin point in tracker coordinates.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeDir.x",
+            "type": "number",
+            "description": "Gaze direction unit-vector component.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeDir.y",
+            "type": "number",
+            "description": "Gaze direction unit-vector component.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeDir.z",
+            "type": "number",
+            "description": "Gaze direction unit-vector component.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeQ",
+            "type": "number",
+            "description": "Gaze tracking quality (1.0 = best).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "leftEyeOpen",
+            "type": "number",
+            "description": "Left eye openness (0 closed, 10 open).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 10
+            }
+          },
+          {
+            "name": "leftEyeOpenQ",
+            "type": "number",
+            "description": "Left eye openness quality.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "rightEyeOpen",
+            "type": "number",
+            "description": "Right eye openness (0 closed, 10 open).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 10
+            }
+          },
+          {
+            "name": "rightEyeOpenQ",
+            "type": "number",
+            "description": "Right eye openness quality.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "pupil",
+            "type": "number",
+            "description": "Pupil diameter in mm (0 = tracking loss).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 20
+            }
+          },
+          {
+            "name": "pupilQ",
+            "type": "number",
+            "description": "Pupil measurement quality.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "sed_fix",
+      "path": "data/sed_fix.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "rowCount": 34171,
+      "schema": {
+        "fields": [
+          {
+            "name": "reltime",
+            "type": "number",
+            "description": "Seconds since recording start.",
+            "constraints": {
+              "required": true,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "datetime",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "iSensor",
+            "type": "integer",
+            "description": "Eye-tracker sensor index (always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPos.x",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPos.y",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPos.z",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPosQ",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headYaw",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headPitch",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headRoll",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "headRotQ",
+            "type": "number",
+            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 0
+            }
+          },
+          {
+            "name": "gazeSrc.x",
+            "type": "number",
+            "description": "Gaze origin point in tracker coordinates.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeSrc.y",
+            "type": "number",
+            "description": "Gaze origin point in tracker coordinates.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeSrc.z",
+            "type": "number",
+            "description": "Gaze origin point in tracker coordinates.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeDir.x",
+            "type": "number",
+            "description": "Gaze direction unit-vector component.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeDir.y",
+            "type": "number",
+            "description": "Gaze direction unit-vector component.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeDir.z",
+            "type": "number",
+            "description": "Gaze direction unit-vector component.",
+            "constraints": {
+              "required": true,
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gazeQ",
+            "type": "number",
+            "description": "Gaze tracking quality (1.0 = best).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "leftEyeOpen",
+            "type": "number",
+            "description": "Left eye openness (0 closed, 10 open).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 10
+            }
+          },
+          {
+            "name": "leftEyeOpenQ",
+            "type": "number",
+            "description": "Left eye openness quality.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "rightEyeOpen",
+            "type": "number",
+            "description": "Right eye openness (0 closed, 10 open).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 10
+            }
+          },
+          {
+            "name": "rightEyeOpenQ",
+            "type": "number",
+            "description": "Right eye openness quality.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "pupil",
+            "type": "number",
+            "description": "Pupil diameter in mm (0 = tracking loss).",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 20
+            }
+          },
+          {
+            "name": "pupilQ",
+            "type": "number",
+            "description": "Pupil measurement quality.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          {
+            "name": "gaze_diff",
+            "type": "number",
+            "description": "Euclidean distance between consecutive gaze vectors (null on first row).",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "fixation",
+            "type": "boolean",
+            "description": "Whether the sample is part of a fixation.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "fixation_id",
+            "type": "integer",
+            "description": "Sequential fixation ID.",
+            "constraints": {
+              "required": true,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "duration",
+            "type": "number",
+            "description": "Fixation duration in seconds (populated only when fixation is true).",
+            "constraints": {
+              "minimum": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "hrv",
+      "path": "data/HRV.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "rowCount": 264,
+      "schema": {
+        "fields": [
+          {
+            "name": "Test",
+            "type": "string",
+            "description": "Session identifier.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "Test 01",
+                "Test 02",
+                "Test 03"
+              ]
+            }
+          },
+          {
+            "name": "Type",
+            "type": "string",
+            "description": "Psychometric test.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "HADS",
+                "STAI-S",
+                "STAI-T",
+                "BFI",
+                "FQ"
+              ]
+            }
+          },
+          {
+            "name": "Start Time",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "End Time",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "Score",
+            "type": "integer",
+            "description": "Question score.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 6
+            }
+          },
+          {
+            "name": "Average Pupil Dilation",
+            "type": "number",
+            "description": "Mean pupil diameter (mm) during the question.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 10
+            }
+          },
+          {
+            "name": "Average Left Blink Rate",
+            "type": "number",
+            "description": "Left-eye blink rate (blinks/min); >400 likely artifact.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          {
+            "name": "Average Right Blink Rate",
+            "type": "number",
+            "description": "Right-eye blink rate (blinks/min); >400 likely artifact.",
+            "constraints": {
+              "required": true,
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          {
+            "name": "Pupil Dilation Increase",
+            "type": "string",
+            "description": "Dilation increased vs baseline.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            }
+          },
+          {
+            "name": "Left Blink Rate Increase",
+            "type": "string",
+            "description": "Left blink rate increased vs baseline.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            }
+          },
+          {
+            "name": "Right Blink Rate Increase",
+            "type": "string",
+            "description": "Right blink rate increased vs baseline.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "psych",
+      "path": "data/Psychometric_Test_Results.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "rowCount": 88,
+      "schema": {
+        "fields": [
+          {
+            "name": "Test",
+            "type": "string",
+            "description": "Psychometric test.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "HADS",
+                "STAI-S",
+                "STAI-T",
+                "BFI",
+                "FQ"
+              ]
+            }
+          },
+          {
+            "name": "Question",
+            "type": "string",
+            "description": "Full question text.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "Answer",
+            "type": "string",
+            "description": "Selected answer text.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "Score",
+            "type": "integer",
+            "description": "Question score.",
+            "constraints": {
+              "required": true,
+              "minimum": 1,
+              "maximum": 6
+            }
+          },
+          {
+            "name": "Time(s)",
+            "type": "number",
+            "description": "Response time in seconds.",
+            "constraints": {
+              "required": true,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "Question Start Time",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "Question Answer Time",
+            "type": "string",
+            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "constraints": {
+              "required": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
