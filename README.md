@@ -257,6 +257,8 @@ GitHub. https://github.com/urme-b/Sensor
 }
 ```
 
+Tagged releases are archived on [Zenodo](https://zenodo.org) for long-term preservation and a citable DOI; the DOI badge will be added here once the first release is archived (deposit metadata lives in [`.zenodo.json`](.zenodo.json)).
+
 ## License
 
 This repository is dual-licensed by content type:

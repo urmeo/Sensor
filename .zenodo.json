@@ -1,0 +1,20 @@
+{
+  "title": "Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research",
+  "description": "A comparative review of eleven sensors and two software platforms used in anxiety-detection research, spanning eye tracking, heart rate, skin conductance, video, and motion capture. Includes device specifications, comparisons, and sample physiological data from a single consenting participant.",
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    { "name": "Bose, Urme" }
+  ],
+  "keywords": [
+    "anxiety-detection",
+    "biometric-sensors",
+    "eye-tracking",
+    "heart-rate-variability",
+    "electrodermal-activity",
+    "galvanic-skin-response",
+    "multimodal-sensing",
+    "psychometric-testing"
+  ]
+}
