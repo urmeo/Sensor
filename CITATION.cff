@@ -6,7 +6,9 @@ version: 0.1.0
 date-released: 2026-06-15
 url: "https://github.com/urme-b/Sensor"
 repository-code: "https://github.com/urme-b/Sensor"
-license: MIT
+license:
+  - MIT
+  - CC-BY-4.0
 authors:
   - family-names: Bose
     given-names: Urme
