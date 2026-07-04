@@ -261,7 +261,8 @@ GitHub. https://github.com/urme-b/Sensor
 
 This repository is dual-licensed by content type:
 
-- **Source code** — the analysis notebook and tests: [MIT](LICENSE)
-- **Sample data & documentation** — the CSVs, data dictionary, PDFs, images, and this README: [CC BY 4.0](LICENSE-DATA)
+- **Source code** — the analysis notebook, `sensor_data` module, and tests: [MIT](LICENSE)
+- **Sample data & documentation** — the CSVs, data dictionary, PDFs, and this README: [CC BY 4.0](LICENSE-DATA)
+- **Product images** (`images/`) — property of their respective manufacturers, included for identification/review only and **not** covered by CC BY 4.0; see [`images/CREDITS.md`](images/CREDITS.md)
 
 When reusing the data or documentation, please retain attribution (see [Citation](#citation)).
