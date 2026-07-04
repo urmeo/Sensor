@@ -187,11 +187,11 @@ From `Threshold.pdf` — literature-based thresholds used for detecting anxiety:
 
 ## Sample Data
 
-The `Sensor's data/` folder has CSVs from psychometric testing sessions (2024-06-13 to 2024-06-24). Full column definitions are in the [data dictionary](Sensor's%20data/DATA_DICTIONARY.md).
+The `data/` folder has CSVs from psychometric testing sessions (2024-06-13 to 2024-06-24). Full column definitions are in the [data dictionary](data/DATA_DICTIONARY.md).
 
 | File | Rows | Description |
 |------|------|-------------|
-| `HRV.csv` | 264 | Per-question biometric summary — pupil dilation & blink rates aggregated per question across all 3 sessions. **Note:** despite the filename, this file contains eye tracking metrics, not raw HRV data. See [`DATA_DICTIONARY.md`](Sensor's%20data/DATA_DICTIONARY.md) for column details. |
+| `HRV.csv` | 264 | Per-question biometric summary — pupil dilation & blink rates aggregated per question across all 3 sessions. **Note:** despite the filename, this file contains eye tracking metrics, not raw HRV data. See [`DATA_DICTIONARY.md`](data/DATA_DICTIONARY.md) for column details. |
 | `hr.csv` | 4032 | Heart rate from multiple sensors (Polar H10+, Moofit) with confidence scores |
 | `ibi.csv` | 2394 | Inter-beat interval series |
 | `Psychometric_Test_Results.csv` | 88 | Question-level responses (HADS, STAI-S, STAI-T, FQ, BFI) with timestamps |
@@ -221,7 +221,7 @@ See [`analysis/explore_data.ipynb`](analysis/explore_data.ipynb) for a walkthrou
 
 ## Ethics & Data
 
-The `Sensor's data/` folder holds sample human physiological and psychometric recordings from a single consenting participant, collected during anxiety-detection sensor evaluation. The participant gave written informed consent, including consent to share the pseudonymised sample openly for research and educational use. No direct identifiers are included (no names, contact details, dates of birth, or device identifiers), and the data are handled as special-category personal data under the GDPR and the French Data Protection Act. No IRB number applies; governance rests on that data-protection framework plus explicit consent. Intended for research and educational use only; do not attempt to re-identify the participant. Full statement: [DATA_ETHICS.md](DATA_ETHICS.md).
+The `data/` folder holds sample human physiological and psychometric recordings from a single consenting participant, collected during anxiety-detection sensor evaluation. The participant gave written informed consent, including consent to share the pseudonymised sample openly for research and educational use. No direct identifiers are included (no names, contact details, dates of birth, or device identifiers), and the data are handled as special-category personal data under the GDPR and the French Data Protection Act. No IRB number applies; governance rests on that data-protection framework plus explicit consent. Intended for research and educational use only; do not attempt to re-identify the participant. Full statement: [DATA_ETHICS.md](DATA_ETHICS.md).
 
 ## Related Repos
 
