@@ -33,7 +33,8 @@ purposes, and was free to withdraw at any time without penalty.
   pseudonymisation key under GDPR Art. 4(5)).
 - Recording timestamps are retained for time-series analysis; they carry no
   location or identity information and present low re-identification risk, and
-  can be shifted to relative session time on request.
+  can be shifted to relative session time by running `scripts/shift_time.py`,
+which writes a timestamp-free (relative-time) copy to `data/relative/`.
 
 ## Data-subject rights
 The participant retains their GDPR rights of access, rectification, erasure, and

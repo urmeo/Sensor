@@ -15,3 +15,6 @@ __pycache__/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Generated de-identified data variant (scripts/shift_time.py)
+data/relative/
