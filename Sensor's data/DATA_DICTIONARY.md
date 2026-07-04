@@ -31,7 +31,7 @@ Per-question biometric summary with eye tracking metrics aggregated for each psy
 
 ## hr.csv
 
-Continuous heart rate readings from chest-strap sensors, sampled at ~2 Hz per sensor (~4 Hz combined).
+Continuous heart rate readings from chest-strap sensors, sampled at ~4 Hz per sensor (~7.5 Hz combined across the two active channels).
 
 | Column | Type | Range | Description |
 |--------|------|-------|-------------|
@@ -151,8 +151,8 @@ Psychometric_Test_Results.csv   (question-level answers, Session 1)
 HRV.csv                         (per-question biometric summaries, Sessions 1–3)
         ↑ aggregated from
 sed.csv / sed_fix.csv           (~60 Hz eye tracking)
-hr.csv                          (~4 Hz heart rate)
-ibi.csv                         (beat-to-beat intervals)
+hr.csv                          (~4 Hz/sensor heart rate)
+ibi.csv                         (inter-beat interval series — quantized)
 ```
 
 **Sensor index (`iSensor`) mapping across files:**
