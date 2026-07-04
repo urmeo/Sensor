@@ -1,6 +1,6 @@
 # Test / CI tooling for the data + notebook smoke tests
-pytest>=9.1.1
-nbformat>=5.10.4
-nbmake>=1.5.5
-ipykernel>=7.3.0
-pandas>=3.0.3
+pytest==9.1.1
+nbformat==5.10.4
+nbmake==1.5.5
+ipykernel==7.3.0
+pandas==3.0.3

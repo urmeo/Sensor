@@ -1,3 +1,4 @@
-pandas>=3.0.3
-numpy>=2.4.6  # stay below 2.5: numpy>=2.5 requires Python>=3.12; lift when 3.11 leaves the CI matrix
-matplotlib>=3.11.0
+pandas==3.0.3
+numpy==2.5.0; python_version >= "3.12"  # 2.5 needs py3.12; 3.11 leg pins 2.4.6
+numpy==2.4.6; python_version < "3.12"
+matplotlib==3.11.0
