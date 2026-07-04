@@ -1,12 +1,8 @@
 """The derivation pipeline must reproduce the committed sed_fix.csv exactly."""
-import sys
-from pathlib import Path
-
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-import derive
 import sensor_data as sd
+from scripts import derive
 
 
 def test_detect_fixations_reproduces_committed_file():

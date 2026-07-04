@@ -1,10 +1,6 @@
 """The de-identified variant must contain no absolute calendar timestamps."""
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-import shift_time
 import sensor_data as sd
+from scripts import shift_time
 
 
 def test_sensor_variant_drops_absolute_datetime():

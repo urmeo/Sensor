@@ -34,12 +34,10 @@ Run `python scripts/derive.py --check` to confirm the pipeline still matches the
 committed file.
 """
 import sys
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import sensor_data as sd
 
 THRESHOLD = 0.01

@@ -14,12 +14,8 @@ timestamp is replaced by seconds-since-session-start:
 
 Run: `python scripts/shift_time.py`  (writes data/relative/, git-ignored).
 """
-import sys
-from pathlib import Path
-
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import sensor_data as sd
 
 SENSOR_FILES = {"hr", "ibi", "sed", "sed_fix"}

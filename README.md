@@ -203,6 +203,8 @@ The `data/` folder has CSVs from psychometric testing sessions (2024-06-13 to 20
 ## Quick Start
 
 ```bash
+pip install -e .                     # the sensor_data package + runtime deps
+# or reproduce the exact CI-pinned environment:
 pip install -r requirements.txt
 ```
 
