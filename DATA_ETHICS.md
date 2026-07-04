@@ -27,7 +27,10 @@ purposes, and was free to withdraw at any time without penalty.
 ## De-identification
 - No direct identifiers are included (no names, contact details, dates of birth,
   or device identifiers).
-- The participant is referenced only by a non-reversible pseudonymous code.
+- With a single participant, the released files contain no identifier or
+  pseudonymous code column; records can be linked back to the participant only
+  through consent documentation held separately by the data controller (the
+  pseudonymisation key under GDPR Art. 4(5)).
 - Recording timestamps are retained for time-series analysis; they carry no
   location or identity information and present low re-identification risk, and
   can be shifted to relative session time on request.
