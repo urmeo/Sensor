@@ -16,5 +16,12 @@
     "galvanic-skin-response",
     "multimodal-sensing",
     "psychometric-testing"
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/urme-b/Sensor",
+      "scheme": "url"
+    }
   ]
 }
