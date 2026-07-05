@@ -7,7 +7,7 @@ name = "sensor-anxiety-dataset"
 version = "0.1.0"
 description = "Biometric sensor review and sample dataset for anxiety-detection research."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Urme Bose" }]
 dependencies = [
@@ -39,7 +39,7 @@ testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py39"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
@@ -48,5 +48,5 @@ select = ["E", "F", "I", "UP", "B"]
 "*.ipynb" = ["E501"]  # exploratory notebook: long palette dicts / plot titles are fine
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.11"
 ignore_missing_imports = true
