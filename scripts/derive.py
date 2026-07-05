@@ -59,7 +59,7 @@ def detect_fixations(sed: pd.DataFrame, threshold: float = THRESHOLD) -> pd.Data
 
     df["fixation"] = df["gaze_diff"] < threshold
 
-    transition = df["fixation"].ne(df["fixation"].shift()).to_numpy()
+    transition = df["fixation"].ne(df["fixation"].shift()).to_numpy(copy=True)
     transition[0] = False
     df["fixation_id"] = np.cumsum(transition) + 1
 
