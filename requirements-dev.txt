@@ -1,6 +1,8 @@
-# Test / CI tooling for the data + notebook smoke tests
+# Test / CI tooling; runtime deps come via the single lock below.
+-r requirements.txt
 pytest==9.1.1
 nbformat==5.10.4
 nbmake==1.5.5
 ipykernel==7.3.0
-pandas==3.0.3
+ruff==0.15.20
+mypy==1.19.1
