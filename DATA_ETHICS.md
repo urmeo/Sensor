@@ -1,7 +1,8 @@
 # Data & Ethics Statement
 
-This repository includes sample human physiological and psychometric data (HRV,
-heart rate, IBI, electrodermal activity, and psychometric test results) recorded
+This repository includes sample human physiological and psychometric data (heart
+rate, inter-beat intervals, eye-tracking (pupil/blink) metrics, and psychometric
+test results) recorded
 from a single consenting participant during anxiety-detection sensor evaluation.
 Because it includes health-related measurements, it is handled as
 special-category personal data.
