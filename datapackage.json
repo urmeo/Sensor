@@ -633,7 +633,7 @@
           {
             "name": "fixation_id",
             "type": "integer",
-            "description": "Sequential fixation ID.",
+            "description": "1-based counter over every contiguous run (fixation OR non-fixation); a run is a fixation only when fixation is true, so ids (1-4958) outnumber fixations.",
             "constraints": {
               "required": true,
               "minimum": 1
