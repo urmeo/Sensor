@@ -86,10 +86,10 @@ def test_sensor_files_share_one_recording_window():
     for name in ("hr", "ibi", "sed", "sed_fix"):
         df = _load(RESOURCES[name])
         dt = pd.to_datetime(df["datetime"])
-        windows[name] = (dt.min().date(), dt.min().normalize())
+        windows[name] = dt.min().date()
         assert dt.min().date().isoformat() == "2024-06-13"
         assert 530 < (df["reltime"].max() - df["reltime"].min()) < 536
-    assert len({d for d, _ in windows.values()}) == 1
+    assert len(set(windows.values())) == 1
 
 
 def test_sed_fix_is_a_superset_of_sed():
