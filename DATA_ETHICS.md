@@ -27,7 +27,8 @@ purposes, and was free to withdraw at any time without penalty.
 
 ## De-identification
 - No direct identifiers are included (no names, contact details, dates of birth,
-  or device identifiers).
+  or device serial numbers). The only device reference is an anonymous channel
+  index (`iSensor`, 0–5), which cannot identify the participant.
 - With a single participant, the released files contain no identifier or
   pseudonymous code column; records can be linked back to the participant only
   through consent documentation held separately by the data controller (the
