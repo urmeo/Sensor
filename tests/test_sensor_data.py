@@ -23,7 +23,11 @@ def test_valid_pupil_drops_tracking_loss():
     assert (kept["pupilQ"] > 0.5).all()
 
 
-def test_fixation_durations_are_positive_and_per_fixation():
-    durations = sd.fixation_durations(sd.load("sed_fix"))
-    assert (durations > 0).all()
+def test_fixation_durations_match_independent_per_fixation_max():
+    sed_fix = sd.load("sed_fix")
+    durations = sd.fixation_durations(sed_fix)
+    fixation_rows = sed_fix[sed_fix["fixation"]]
+    expected = fixation_rows.groupby("fixation_id")["duration"].max()
+    expected = expected[expected > 0]
+    assert durations.equals(expected)
     assert durations.index.name == "fixation_id"

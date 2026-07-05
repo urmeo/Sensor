@@ -13,6 +13,8 @@ import pandas as pd
 import pandas.api.types as pdt
 import pytest
 
+from scripts.derive import DERIVED_COLUMNS
+
 ROOT = Path(__file__).resolve().parents[1]
 PKG = json.loads((ROOT / "datapackage.json").read_text())
 RESOURCES = {r["name"]: r for r in PKG["resources"]}
@@ -95,7 +97,7 @@ def test_sensor_files_share_one_recording_window():
 def test_sed_fix_is_a_superset_of_sed():
     sed = _load(RESOURCES["sed"])
     sed_fix = _load(RESOURCES["sed_fix"])
-    derived_cols = {"gaze_diff", "fixation", "fixation_id", "duration"}
+    derived_cols = set(DERIVED_COLUMNS)
     assert len(sed) == len(sed_fix)
     assert set(sed.columns).issubset(sed_fix.columns)
     assert set(sed_fix.columns) - set(sed.columns) == derived_cols
