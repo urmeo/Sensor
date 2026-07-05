@@ -27,6 +27,8 @@ def data_dir(base: str | Path | None = None) -> Path:
 
 
 def load(name: str, base: str | Path | None = None) -> pd.DataFrame:
+    if name not in CSV_FILES:
+        raise KeyError(f"unknown dataset {name!r}; valid names: {sorted(CSV_FILES)}")
     return pd.read_csv(data_dir(base) / CSV_FILES[name])
 
 
@@ -39,12 +41,13 @@ def valid_hr(hr: pd.DataFrame) -> pd.DataFrame:
     return hr[hr["confidence"] == 1.0].copy()
 
 
-def valid_pupil(sed: pd.DataFrame, min_quality: float = 0.5) -> pd.DataFrame:
+def valid_pupil(eye: pd.DataFrame, min_quality: float = 0.5) -> pd.DataFrame:
     """Eye-tracking rows with a real pupil reading (drops tracking loss)."""
-    return sed[(sed["pupil"] > 0) & (sed["pupilQ"] > min_quality)].copy()
+    return eye[(eye["pupil"] > 0) & (eye["pupilQ"] > min_quality)].copy()
 
 
 def fixation_durations(sed_fix: pd.DataFrame) -> pd.Series:
-    """One duration in seconds per detected fixation."""
+    """Duration (seconds) of each multi-sample fixation; single-sample runs
+    (which have zero measured span) are excluded."""
     durations = sed_fix[sed_fix["fixation"]].groupby("fixation_id")["duration"].max()
     return durations[durations > 0]
