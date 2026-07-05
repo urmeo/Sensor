@@ -130,13 +130,13 @@ All columns from `sed.csv` carry over, plus:
 |--------|------|-------|-------------|
 | `gaze_diff` | float | 0.0–1.583 | Euclidean distance between consecutive gaze direction vectors — a saccade/movement metric |
 | `fixation` | bool | `True` / `False` | Whether the gaze point is part of a fixation (`True`) or a saccade (`False`) |
-| `fixation_id` | int | 1–4958 | Sequential ID for each detected fixation |
+| `fixation_id` | int | 1–4958 | Sequential ID for each contiguous run (fixation OR non-fixation); a run is a fixation only when `fixation` is True |
 | `duration` | float | 0.0–1.938 | Fixation duration in seconds (only populated when `fixation = True`) |
 
 **Notes:**
 - Same 34,171 rows as `sed.csv`.
 - 88.6% of samples are classified as fixations (30,289 of 34,171).
-- 4,958 distinct fixation events were detected.
+- 2,479 distinct fixation events were detected (of 4,958 total contiguous runs — the other 2,479 are non-fixation/saccade runs, since fixation_id counts runs of either kind).
 - Fixation durations range from near-zero to ~1.94 seconds.
 
 ---
