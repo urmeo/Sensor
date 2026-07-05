@@ -25,8 +25,9 @@ Not covered
 -----------
 `HRV.csv` (per-question pupil/blink summaries) is NOT reproduced here: it spans
 three sessions but only Session 1 raw data is shipped, and its timestamps sit on
-a different clock offset from `sed.csv` (the notebook aligns them with a fitted
-offset). Blink-rate extraction from eye-openness is also undocumented upstream.
+a different clock offset from `sed.csv` (the notebook aligns them by subtracting
+the sed start timestamp, a direct wall-clock offset). Blink-rate extraction from
+eye-openness is also undocumented upstream.
 Reproducing it would be guesswork, so it is intentionally left out rather than
 shipped as an unverifiable derivation.
 
