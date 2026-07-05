@@ -208,7 +208,7 @@ pip install -e .                     # the sensor_data package + runtime deps
 pip install -r requirements.txt
 ```
 
-See [`analysis/explore_data.ipynb`](analysis/explore_data.ipynb) for a walkthrough that loads each CSV and plots heart rate, pupil dilation, fixation durations, and HRV metrics from the sample session.
+See [`analysis/explore_data.ipynb`](analysis/explore_data.ipynb) for a walkthrough that loads each CSV and plots heart rate, pupil dilation, fixation durations, and (illustrative-only) IBI-derived RMSSD/SDNN — which the notebook flags as not valid HRV — from the sample session.
 
 ---
 
