@@ -245,14 +245,14 @@ Biometric Sensors · Eye Tracking · Heart Rate Variability · Galvanic Skin Res
 If you use this resource, please cite:
 
 ```
-Bose, U. (2026). Sensor: Biometric Sensor Review for Anxiety Detection Research.
+Bose, U. (2026). Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research.
 GitHub. https://github.com/urme-b/Sensor
 ```
 
 ```bibtex
 @misc{bose2026sensor,
   author       = {Bose, Urme},
-  title        = {Sensor: Biometric Sensor Review for Anxiety Detection Research},
+  title        = {Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research},
   year         = {2026},
   url          = {https://github.com/urme-b/Sensor},
   note         = {Review of 11 sensors and 2 software platforms for multimodal anxiety detection}
