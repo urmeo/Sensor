@@ -3,7 +3,6 @@ message: "If you use this resource, please cite it as below."
 type: dataset
 title: "Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research"
 version: 0.1.0
-date-released: 2026-06-15
 url: "https://github.com/urme-b/Sensor"
 repository-code: "https://github.com/urme-b/Sensor"
 license:
