@@ -206,6 +206,8 @@ The `data/` folder has CSVs from psychometric testing sessions (2024-06-13 to 20
 pip install -e .                     # the sensor_data package + runtime deps
 # or reproduce the exact CI-pinned environment:
 pip install -r requirements.txt
+# fully reproducible, hash-locked install (all extras):
+pip install -r requirements.lock
 ```
 
 See [`analysis/explore_data.ipynb`](analysis/explore_data.ipynb) for a walkthrough that loads each CSV and plots heart rate, pupil dilation, fixation durations, and (illustrative-only) IBI-derived RMSSD/SDNN — which the notebook flags as not valid HRV — from the sample session.
