@@ -66,8 +66,8 @@ def test_field_types_required_ranges_enums(name):
             assert not extra, f"{name}.{col}: unexpected values {extra}"
 
 
-def test_hrv_is_88_questions_times_3_sessions():
-    df = _load(RESOURCES["hrv"])
+def test_eye_metrics_is_88_questions_times_3_sessions():
+    df = _load(RESOURCES["eye_metrics"])
     assert len(df) == 264
     assert df["Test"].value_counts().to_dict() == {"Test 01": 88, "Test 02": 88, "Test 03": 88}
 

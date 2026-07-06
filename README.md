@@ -191,7 +191,7 @@ The `data/` folder has CSVs from psychometric testing sessions (2024-06-13 to 20
 
 | File | Rows | Description |
 |------|------|-------------|
-| `HRV.csv` | 264 | Per-question biometric summary — pupil dilation & blink rates aggregated per question across all 3 sessions. **Note:** despite the filename, this file contains eye tracking metrics, not raw HRV data. See [`DATA_DICTIONARY.md`](data/DATA_DICTIONARY.md) for column details. |
+| `eye_metrics.csv` | 264 | Per-question eye-tracking summary — pupil dilation & blink rates aggregated per question across all 3 sessions. Not heart-rate variability (formerly misnamed `HRV.csv`). See [`DATA_DICTIONARY.md`](data/DATA_DICTIONARY.md) for column details. |
 | `hr.csv` | 4032 | Heart rate from multiple sensors (Polar H10+, Moofit) with confidence scores |
 | `ibi.csv` | 2394 | Inter-beat interval series |
 | `Psychometric_Test_Results.csv` | 88 | Question-level responses (HADS, STAI-S, STAI-T, FQ, BFI) with timestamps |

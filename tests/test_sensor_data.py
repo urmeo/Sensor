@@ -6,7 +6,7 @@ import sensor_data as sd
 def test_load_all_returns_every_csv():
     data = sd.load_all()
     assert set(data) == set(sd.CSV_FILES)
-    assert data["hrv"].shape[0] == 264
+    assert data["eye_metrics"].shape[0] == 264
     assert data["psych"].shape[0] == 88
 
 

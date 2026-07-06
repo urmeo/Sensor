@@ -7,7 +7,7 @@ timestamp is replaced by seconds-since-session-start:
 
 - sensor files (hr, ibi, sed, sed_fix): drop the absolute `datetime` column and
   keep the already-relative `reltime`.
-- HRV.csv: replace `Start Time` / `End Time` with `Start (s)` / `End (s)`,
+- eye_metrics.csv: replace `Start Time` / `End Time` with `Start (s)` / `End (s)`,
   measured from the earliest timestamp of that session (`Test`).
 - Psychometric_Test_Results.csv: replace the two absolute question timestamps
   with seconds from the first question.
@@ -29,7 +29,7 @@ def to_relative(df: pd.DataFrame, name: str) -> pd.DataFrame:
     df = df.copy()
     if name in SENSOR_FILES:
         return df.drop(columns=[c for c in ["datetime"] if c in df.columns])
-    if name == "hrv":
+    if name == "eye_metrics":
         start = pd.to_datetime(df["Start Time"], format="mixed")
         end = pd.to_datetime(df["End Time"], format="mixed")
         base = start.groupby(df["Test"]).transform("min")  # session start, shared by both

@@ -1,12 +1,12 @@
 # Data Dictionary
 
-Column-level reference for every CSV in this folder. All files come from a single participant recorded across three sessions (2024-06-13, 2024-06-20, 2024-06-24). The raw sensor files (`hr.csv`, `ibi.csv`, `sed.csv`, `sed_fix.csv`) only cover Session 1 (June 13). `HRV.csv` covers all three.
+Column-level reference for every CSV in this folder. All files come from a single participant recorded across three sessions (2024-06-13, 2024-06-20, 2024-06-24). The raw sensor files (`hr.csv`, `ibi.csv`, `sed.csv`, `sed_fix.csv`) only cover Session 1 (June 13). `eye_metrics.csv` covers all three.
 
 ---
 
-## HRV.csv
+## eye_metrics.csv
 
-Per-question biometric summary with eye tracking metrics aggregated for each psychometric question. Despite the filename, this file does **not** contain raw HRV data — it stores pupil dilation and blink rate summaries computed from the eye tracker during each question interval.
+Per-question summary of eye-tracking metrics for each psychometric question: pupil dilation and blink rate, computed from the eye tracker during each question interval. This is **not** heart-rate variability — the file was formerly, misleadingly, named `HRV.csv`.
 
 | Column | Type | Range | Description |
 |--------|------|-------|-------------|
@@ -148,7 +148,7 @@ All sensor files share the same recording window: **2024-06-13, 11:30:10 – 11:
 ```
 Psychometric_Test_Results.csv   (question-level answers, Session 1)
         ↕ aligned timestamps
-HRV.csv                         (per-question biometric summaries, Sessions 1–3)
+eye_metrics.csv                         (per-question biometric summaries, Sessions 1–3)
         ↑ aggregated from
 sed.csv / sed_fix.csv           (~60 Hz eye tracking)
 hr.csv                          (~4 Hz/sensor heart rate)

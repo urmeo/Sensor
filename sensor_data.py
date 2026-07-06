@@ -17,7 +17,7 @@ CSV_FILES: dict[str, str] = {
     "ibi": "ibi.csv",
     "sed": "sed.csv",
     "sed_fix": "sed_fix.csv",
-    "hrv": "HRV.csv",
+    "eye_metrics": "eye_metrics.csv",
     "psych": "Psychometric_Test_Results.csv",
 }
 

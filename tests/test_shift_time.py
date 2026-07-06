@@ -12,7 +12,7 @@ def test_sensor_variant_drops_absolute_datetime():
 
 
 def test_hrv_variant_is_relative_seconds():
-    out = shift_time.to_relative(sd.load("hrv"), "hrv")
+    out = shift_time.to_relative(sd.load("eye_metrics"), "eye_metrics")
     assert {"Start Time", "End Time"}.isdisjoint(out.columns)
     assert {"Start (s)", "End (s)"} <= set(out.columns)
     assert (out["Start (s)"] >= 0).all()

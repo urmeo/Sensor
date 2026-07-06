@@ -651,8 +651,8 @@
       }
     },
     {
-      "name": "hrv",
-      "path": "data/HRV.csv",
+      "name": "eye_metrics",
+      "path": "data/eye_metrics.csv",
       "profile": "tabular-data-resource",
       "format": "csv",
       "mediatype": "text/csv",
