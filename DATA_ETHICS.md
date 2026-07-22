@@ -47,4 +47,4 @@ Released under the repository's license for **research and educational
 purposes** only. Do not attempt to re-identify the participant.
 
 ## Contact
-Data controller / questions about this statement: Urme Bose — urme.bose1@gmail.com.
+Data controller / questions about this statement: Urme Bose ([@urmeo](https://github.com/urmeo)).
