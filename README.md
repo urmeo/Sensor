@@ -229,8 +229,8 @@ The `data/` folder holds sample human physiological and psychometric recordings 
 
 ## Related Repos
 
-- [Multimodal-Multisensor](https://github.com/urme-b/Multimodal-Multisensor) — Longitudinal study using these sensors
-- [CalmSense](https://github.com/urme-b/CalmSense) — Stress detection system built on multimodal signals
+- [Multimodal-Multisensor](https://github.com/urmeo/Multimodal-Multisensor) — Longitudinal study using these sensors
+- [CalmSense](https://github.com/urmeo/CalmSense) — Stress detection system built on multimodal signals
 
 ---
 
@@ -248,7 +248,7 @@ If you use this resource, please cite:
 
 ```
 Bose, U. (2026). Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research.
-GitHub. https://github.com/urme-b/Sensor
+GitHub. https://github.com/urmeo/Sensor
 ```
 
 ```bibtex
@@ -256,7 +256,7 @@ GitHub. https://github.com/urme-b/Sensor
   author       = {Bose, Urme},
   title        = {Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research},
   year         = {2026},
-  url          = {https://github.com/urme-b/Sensor},
+  url          = {https://github.com/urmeo/Sensor},
   note         = {Review of 11 sensors and 2 software platforms for multimodal anxiety detection}
 }
 ```

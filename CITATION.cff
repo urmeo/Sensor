@@ -3,15 +3,15 @@ message: "If you use this resource, please cite it as below."
 type: dataset
 title: "Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research"
 version: 0.1.0
-url: "https://github.com/urme-b/Sensor"
-repository-code: "https://github.com/urme-b/Sensor"
+url: "https://github.com/urmeo/Sensor"
+repository-code: "https://github.com/urmeo/Sensor"
 license:
   - MIT
   - CC-BY-4.0
 authors:
   - family-names: Bose
     given-names: Urme
-    alias: urme-b
+    alias: urmeo
 keywords:
   - anxiety-detection
   - biometric-sensors
