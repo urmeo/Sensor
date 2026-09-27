@@ -1,6 +1,11 @@
 """The derivation pipeline must reproduce the committed sed_fix.csv exactly."""
 
+import runpy
+import sys
+
 import numpy as np
+import pandas as pd
+import pytest
 
 import sensor_data as sd
 from scripts import derive
@@ -21,3 +26,31 @@ def test_detect_fixations_reproduces_committed_file():
 
 def test_check_helper_passes():
     assert derive.check() is True
+
+
+def test_detect_fixations_accepts_empty_recording():
+    empty = pd.DataFrame(columns=["gazeDir.x", "gazeDir.y", "gazeDir.z", "reltime"], dtype=float)
+    out = derive.detect_fixations(empty)
+    assert out.empty
+    assert list(out.columns) == list(empty.columns) + derive.DERIVED_COLUMNS
+
+
+@pytest.mark.parametrize("matches", [True, False])
+def test_check_command_exit_status(monkeypatch, capsys, matches):
+    raw = pd.DataFrame(
+        {
+            "gazeDir.x": [0.0, 0.0],
+            "gazeDir.y": [0.0, 0.0],
+            "gazeDir.z": [1.0, 1.0],
+            "reltime": [0.0, 1.0],
+        }
+    )
+    committed = derive.detect_fixations(raw)
+    if not matches:
+        committed.loc[1, "duration"] = 99.0
+    monkeypatch.setattr(sd, "load", lambda name, base=None: raw if name == "sed" else committed)
+    monkeypatch.setattr(sys, "argv", ["scripts/derive.py", "--check"])
+    with pytest.raises(SystemExit) as result:
+        runpy.run_path(derive.__file__, run_name="__main__")
+    assert result.value.code == (0 if matches else 1)
+    assert str(matches) in capsys.readouterr().out

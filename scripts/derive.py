@@ -55,12 +55,13 @@ def detect_fixations(sed: pd.DataFrame, threshold: float = THRESHOLD) -> pd.Data
 
     vectors = df[["gazeDir.x", "gazeDir.y", "gazeDir.z"]].to_numpy()
     step = np.sqrt(((vectors[1:] - vectors[:-1]) ** 2).sum(axis=1))
-    df["gaze_diff"] = np.concatenate([[np.nan], step])
+    df["gaze_diff"] = np.concatenate([[np.nan], step])[: len(df)]
 
     df["fixation"] = df["gaze_diff"] < threshold
 
     transition = df["fixation"].ne(df["fixation"].shift()).to_numpy(copy=True)
-    transition[0] = False
+    if len(transition):
+        transition[0] = False
     df["fixation_id"] = np.cumsum(transition) + 1
 
     reltime = df.groupby("fixation_id")["reltime"]
@@ -89,7 +90,9 @@ def check(base: str | Path | None = None) -> bool:
 
 if __name__ == "__main__":
     if "--check" in sys.argv:
-        print("reproduces sed_fix.csv exactly:", check())
+        matches = check()
+        print("reproduces sed_fix.csv exactly:", matches)
+        sys.exit(0 if matches else 1)
     else:
         out = detect_fixations(sd.load("sed"))
         dest = sd.DATA_DIR / "sed_fix.csv"
