@@ -1,50 +1,33 @@
-# Data & Ethics Statement
+# Data and ethics
 
-This repository includes sample human physiological and psychometric data (heart
-rate, inter-beat intervals, eye-tracking (pupil/blink) metrics, and psychometric
-test results) recorded
-from a single consenting participant during anxiety-detection sensor evaluation.
-Because it includes health-related measurements, it is handled as
-special-category personal data.
+**Consent · Privacy · Purpose · Rights**
 
-## Legal basis and data protection
-The data were collected, and are shared, in compliance with the EU General Data
-Protection Regulation (Regulation (EU) 2016/679, "GDPR") and the French Data
-Protection Act (Loi n° 78-17 du 6 janvier 1978, "Informatique et Libertés", as
-amended). No separate institutional review board (IRB) number applies;
-governance rests on the data-protection framework above together with the
-participant's explicit consent.
+One participant; raw sensor/questionnaire data for Session 1 and supplied eye summaries for three sessions. The author treats these health-related records as special-category personal data.
 
-- Lawful basis: the participant's explicit, informed consent (GDPR Art. 6(1)(a)
-  and, for special-category health data, Art. 9(2)(a)).
-- Principles applied: data minimisation, purpose limitation, and release of only
-  pseudonymised records (GDPR Art. 5).
+## Author's consent and governance statement
 
-## Informed consent
-The participant gave written informed consent, including explicit consent for
-the pseudonymised sample data to be shared openly for research and educational
-purposes, and was free to withdraw at any time without penalty.
+| Topic | Recorded statement |
+|---|---|
+| Consent | Written, explicit informed consent for open sharing of pseudonymised samples for research and education; withdrawal without penalty |
+| Framework | GDPR, Regulation (EU) 2016/679, and the amended French [Loi n° 78-17](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460) |
+| Declared basis | Consent under GDPR Articles 6(1)(a) and 9(2)(a); minimisation and purpose limitation under Article 5 |
+| Governance | No separate IRB number reported; consent documentation held separately by the data controller |
+| Rights | Access, rectification, erasure and objection through the contact below |
 
-## De-identification
-- No direct identifiers are included (no names, contact details, dates of birth,
-  or device serial numbers). The only device reference is an anonymous channel
-  index (`iSensor`, 0–5), which cannot identify the participant.
-- With a single participant, the released files contain no identifier or
-  pseudonymous code column; records can be linked back to the participant only
-  through consent documentation held separately by the data controller (the
-  pseudonymisation key under GDPR Art. 4(5)).
-- Recording timestamps are retained for time-series analysis; they carry no
-  location or identity information and present low re-identification risk, and
-  can be shifted to relative session time by running `scripts/shift_time.py`,
-which writes a timestamp-free (relative-time) copy to `data/relative/`.
+Consent records and independent approval evidence are not included in the repository. This page preserves the author's account; it does not establish compliance from the public files alone.
 
-## Data-subject rights
-The participant retains their GDPR rights of access, rectification, erasure, and
-objection, exercisable via the contact below.
+## Privacy
 
-## Permitted use
-Released under the repository's license for **research and educational
-purposes** only. Do not attempt to re-identify the participant.
+- Direct identifiers are absent from the published schema. Anonymous channel indices do not establish anonymous data.
+- Precise clocks, questionnaire answers and physiological patterns can be linked to other information. Keep consent records separate; avoid re-identification and additional disclosure.
+- Relative copies remove calendar timestamp columns. They retain sensitive values, and their zero points differ by resource. See the [clock table](data/DATA_DICTIONARY.md#clocks).
+
+## Purpose and licenses
+
+Research and education are the stated consent purposes. [CC BY 4.0](LICENSE-DATA) permits copyright reuse, including commercial reuse, where the author holds the relevant rights; privacy and other permissions remain separate. It does not turn the consent statement into unrestricted data-processing permission. [CC's rights explanation](https://creativecommons.org/licenses/by/4.0/)
+
+Code is [MIT](LICENSE). Questionnaire wording/answer options and product images retain third-party rights; open redistribution permission for instrument content is unestablished. See [NOTICE](NOTICE.md) and [image credits](images/CREDITS.md).
 
 ## Contact
-Data controller / questions about this statement: Urme Bose ([@urmeo](https://github.com/urmeo)).
+
+Data controller and questions: Urme Bose, [@urmeo](https://github.com/urmeo). Send identifying or consent details privately using [the reporting process](SECURITY.md).

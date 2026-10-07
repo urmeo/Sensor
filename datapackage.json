@@ -1,7 +1,7 @@
 {
   "name": "sensor-anxiety-detection-sample",
-  "title": "Sensor — Biometric Sensor Sample Dataset",
-  "description": "Sample multimodal physiological and psychometric recordings from a single consenting participant (see DATA_ETHICS.md). Machine-readable schema for the CSVs in data/. Full prose reference: data/DATA_DICTIONARY.md.",
+  "title": "Sensor: physiological and questionnaire sample",
+  "description": "Six CSV resources from one participant: raw sensor and questionnaire observations for Session 1, plus supplied eye summaries for three sessions. The analysis is descriptive; recording devices, calibration and cross-stream clock synchronization are not established by these files. See data/DATA_DICTIONARY.md, DATA_ETHICS.md and NOTICE.md.",
   "licenses": [
     {
       "name": "CC-BY-4.0",
@@ -32,7 +32,7 @@
           {
             "name": "datetime",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "Calendar timestamp string, YYYY/MM/DD HH:MM:SS.fff; timezone-naive with unspecified zone.",
             "constraints": {
               "required": true
             }
@@ -40,7 +40,7 @@
           {
             "name": "iSensor",
             "type": "integer",
-            "description": "Sensor index (0-5).",
+            "description": "Anonymous channel index; recorded devices are not mapped to channel IDs.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -68,7 +68,14 @@
             }
           }
         ]
-      }
+      },
+      "description": "Session 1 sampled heart-rate readings on anonymous channels; device mapping is undocumented.",
+      "timeZone": "unspecified",
+      "timestampAwareness": "naive",
+      "timestampFields": [
+        "datetime"
+      ],
+      "relativeTimeOrigin": "Existing reltime from recording start, retained in relative-time copies."
     },
     {
       "name": "ibi",
@@ -91,7 +98,7 @@
           {
             "name": "datetime",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "Calendar timestamp string, YYYY/MM/DD HH:MM:SS.fff; timezone-naive with unspecified zone.",
             "constraints": {
               "required": true
             }
@@ -99,7 +106,7 @@
           {
             "name": "iSensor",
             "type": "integer",
-            "description": "Sensor index (0-5).",
+            "description": "Anonymous channel index; recorded devices are not mapped to channel IDs.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -117,7 +124,14 @@
             }
           }
         ]
-      }
+      },
+      "description": "Session 1 quantized, repeatedly sampled interval readings; not a verified sequence of NN or R-R beat intervals.",
+      "timeZone": "unspecified",
+      "timestampAwareness": "naive",
+      "timestampFields": [
+        "datetime"
+      ],
+      "relativeTimeOrigin": "Existing reltime from recording start, retained in relative-time copies."
     },
     {
       "name": "sed",
@@ -140,7 +154,7 @@
           {
             "name": "datetime",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "Calendar timestamp string, YYYY/MM/DD HH:MM:SS.fff; timezone-naive with unspecified zone.",
             "constraints": {
               "required": true
             }
@@ -148,7 +162,7 @@
           {
             "name": "iSensor",
             "type": "integer",
-            "description": "Eye-tracker sensor index (always 0).",
+            "description": "Anonymous channel index; recorded devices are not mapped to channel IDs.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -158,7 +172,7 @@
           {
             "name": "headPos.x",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -168,7 +182,7 @@
           {
             "name": "headPos.y",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -178,7 +192,7 @@
           {
             "name": "headPos.z",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -188,7 +202,7 @@
           {
             "name": "headPosQ",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -198,7 +212,7 @@
           {
             "name": "headYaw",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -208,7 +222,7 @@
           {
             "name": "headPitch",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -218,7 +232,7 @@
           {
             "name": "headRoll",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -228,7 +242,7 @@
           {
             "name": "headRotQ",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -238,7 +252,7 @@
           {
             "name": "gazeSrc.x",
             "type": "number",
-            "description": "Gaze origin point in tracker coordinates.",
+            "description": "Reported gaze-origin coordinate; coordinate frame and units undocumented.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -248,7 +262,7 @@
           {
             "name": "gazeSrc.y",
             "type": "number",
-            "description": "Gaze origin point in tracker coordinates.",
+            "description": "Reported gaze-origin coordinate; coordinate frame and units undocumented.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -258,7 +272,7 @@
           {
             "name": "gazeSrc.z",
             "type": "number",
-            "description": "Gaze origin point in tracker coordinates.",
+            "description": "Reported gaze-origin coordinate; coordinate frame and units undocumented.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -268,7 +282,7 @@
           {
             "name": "gazeDir.x",
             "type": "number",
-            "description": "Gaze direction unit-vector component.",
+            "description": "Reported gaze-direction vector component.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -278,7 +292,7 @@
           {
             "name": "gazeDir.y",
             "type": "number",
-            "description": "Gaze direction unit-vector component.",
+            "description": "Reported gaze-direction vector component.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -288,7 +302,7 @@
           {
             "name": "gazeDir.z",
             "type": "number",
-            "description": "Gaze direction unit-vector component.",
+            "description": "Reported gaze-direction vector component.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -348,7 +362,7 @@
           {
             "name": "pupil",
             "type": "number",
-            "description": "Pupil diameter in mm (0 = tracking loss).",
+            "description": "Reported pupil measurement in mm; calibration unavailable. Zero readings are excluded by the pupil quality filter.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -366,7 +380,14 @@
             }
           }
         ]
-      }
+      },
+      "description": "Session 1 eye-tracking export; device, coordinate units, acquisition configuration and calibration are undocumented.",
+      "timeZone": "unspecified",
+      "timestampAwareness": "naive",
+      "timestampFields": [
+        "datetime"
+      ],
+      "relativeTimeOrigin": "Existing reltime from recording start, retained in relative-time copies."
     },
     {
       "name": "sed_fix",
@@ -389,7 +410,7 @@
           {
             "name": "datetime",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "Calendar timestamp string, YYYY/MM/DD HH:MM:SS.fff; timezone-naive with unspecified zone.",
             "constraints": {
               "required": true
             }
@@ -397,7 +418,7 @@
           {
             "name": "iSensor",
             "type": "integer",
-            "description": "Eye-tracker sensor index (always 0).",
+            "description": "Anonymous channel index; recorded devices are not mapped to channel IDs.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -407,7 +428,7 @@
           {
             "name": "headPos.x",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -417,7 +438,7 @@
           {
             "name": "headPos.y",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -427,7 +448,7 @@
           {
             "name": "headPos.z",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -437,7 +458,7 @@
           {
             "name": "headPosQ",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -447,7 +468,7 @@
           {
             "name": "headYaw",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -457,7 +478,7 @@
           {
             "name": "headPitch",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -467,7 +488,7 @@
           {
             "name": "headRoll",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -477,7 +498,7 @@
           {
             "name": "headRotQ",
             "type": "number",
-            "description": "Head position/rotation (not tracked in this setup; always 0).",
+            "description": "Head field recorded as zero throughout the source; cause and acquisition configuration unknown.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -487,7 +508,7 @@
           {
             "name": "gazeSrc.x",
             "type": "number",
-            "description": "Gaze origin point in tracker coordinates.",
+            "description": "Reported gaze-origin coordinate; coordinate frame and units undocumented.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -497,7 +518,7 @@
           {
             "name": "gazeSrc.y",
             "type": "number",
-            "description": "Gaze origin point in tracker coordinates.",
+            "description": "Reported gaze-origin coordinate; coordinate frame and units undocumented.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -507,7 +528,7 @@
           {
             "name": "gazeSrc.z",
             "type": "number",
-            "description": "Gaze origin point in tracker coordinates.",
+            "description": "Reported gaze-origin coordinate; coordinate frame and units undocumented.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -517,7 +538,7 @@
           {
             "name": "gazeDir.x",
             "type": "number",
-            "description": "Gaze direction unit-vector component.",
+            "description": "Reported gaze-direction vector component.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -527,7 +548,7 @@
           {
             "name": "gazeDir.y",
             "type": "number",
-            "description": "Gaze direction unit-vector component.",
+            "description": "Reported gaze-direction vector component.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -537,7 +558,7 @@
           {
             "name": "gazeDir.z",
             "type": "number",
-            "description": "Gaze direction unit-vector component.",
+            "description": "Reported gaze-direction vector component.",
             "constraints": {
               "required": true,
               "minimum": -1,
@@ -597,7 +618,7 @@
           {
             "name": "pupil",
             "type": "number",
-            "description": "Pupil diameter in mm (0 = tracking loss).",
+            "description": "Reported pupil measurement in mm; calibration unavailable. Zero readings are excluded by the pupil quality filter.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -617,7 +638,7 @@
           {
             "name": "gaze_diff",
             "type": "number",
-            "description": "Euclidean distance between consecutive gaze vectors (null on first row).",
+            "description": "Dimensionless Euclidean displacement between consecutive gaze-direction vectors; null on the first row. Not angular velocity.",
             "constraints": {
               "minimum": 0
             }
@@ -625,7 +646,7 @@
           {
             "name": "fixation",
             "type": "boolean",
-            "description": "Whether the sample is part of a fixation.",
+            "description": "Legacy low-movement flag: gaze_diff <0.01, first sample false. Unvalidated; false is not a measured saccade label.",
             "constraints": {
               "required": true
             }
@@ -633,7 +654,7 @@
           {
             "name": "fixation_id",
             "type": "integer",
-            "description": "1-based counter over every contiguous run (fixation OR non-fixation); a run is a fixation only when fixation is true, so ids (1-4958) outnumber fixations.",
+            "description": "1-based counter over every contiguous true or false legacy flag run; includes non-fixation runs.",
             "constraints": {
               "required": true,
               "minimum": 1
@@ -642,13 +663,20 @@
           {
             "name": "duration",
             "type": "number",
-            "description": "Fixation duration in seconds (populated only when fixation is true).",
+            "description": "Last-minus-first reltime span in seconds for a true legacy run, repeated on its rows; null for false runs. No minimum-duration rule.",
             "constraints": {
               "minimum": 0
             }
           }
         ]
-      }
+      },
+      "description": "Legacy low-movement segmentation of sed.csv using consecutive gaze-vector displacement <0.01; unvalidated, with no quality, gap or minimum-duration rule.",
+      "timeZone": "unspecified",
+      "timestampAwareness": "naive",
+      "timestampFields": [
+        "datetime"
+      ],
+      "relativeTimeOrigin": "Existing reltime from recording start, retained in relative-time copies."
     },
     {
       "name": "eye_metrics",
@@ -690,7 +718,7 @@
           {
             "name": "Start Time",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "Supplied question boundary timestamp string; timezone-naive with unspecified zone.",
             "constraints": {
               "required": true
             }
@@ -698,7 +726,7 @@
           {
             "name": "End Time",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "Supplied question boundary timestamp string; timezone-naive with unspecified zone.",
             "constraints": {
               "required": true
             }
@@ -706,7 +734,7 @@
           {
             "name": "Score",
             "type": "integer",
-            "description": "Question score.",
+            "description": "Stored item code; scale variant, reverse-keying and aggregate scoring are not established by this schema.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -716,7 +744,7 @@
           {
             "name": "Average Pupil Dilation",
             "type": "number",
-            "description": "Mean pupil diameter (mm) during the question.",
+            "description": "Supplied pupil-summary value, reported in mm. Absolute diameter versus baseline change, calibration and aggregation are undocumented.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -726,7 +754,7 @@
           {
             "name": "Average Left Blink Rate",
             "type": "number",
-            "description": "Left-eye blink rate (blinks/min); >400 likely artifact.",
+            "description": "Supplied blink-summary value, reported in blinks/min; blink definition, quality filtering and aggregation are undocumented.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -736,7 +764,7 @@
           {
             "name": "Average Right Blink Rate",
             "type": "number",
-            "description": "Right-eye blink rate (blinks/min); >400 likely artifact.",
+            "description": "Supplied blink-summary value, reported in blinks/min; blink definition, quality filtering and aggregation are undocumented.",
             "constraints": {
               "required": true,
               "minimum": 0,
@@ -746,7 +774,7 @@
           {
             "name": "Pupil Dilation Increase",
             "type": "string",
-            "description": "Dilation increased vs baseline.",
+            "description": "Supplied Yes/No comparison flag; baseline and comparison rule are undocumented.",
             "constraints": {
               "required": true,
               "enum": [
@@ -758,7 +786,7 @@
           {
             "name": "Left Blink Rate Increase",
             "type": "string",
-            "description": "Left blink rate increased vs baseline.",
+            "description": "Supplied Yes/No comparison flag; baseline and comparison rule are undocumented.",
             "constraints": {
               "required": true,
               "enum": [
@@ -770,7 +798,7 @@
           {
             "name": "Right Blink Rate Increase",
             "type": "string",
-            "description": "Right blink rate increased vs baseline.",
+            "description": "Supplied Yes/No comparison flag; baseline and comparison rule are undocumented.",
             "constraints": {
               "required": true,
               "enum": [
@@ -780,7 +808,15 @@
             }
           }
         ]
-      }
+      },
+      "description": "Supplied question-level eye summaries for three sessions. Aggregation, baseline, blink-event definition and calibrated pupil scale are unavailable.",
+      "timeZone": "unspecified",
+      "timestampAwareness": "naive",
+      "timestampFields": [
+        "Start Time",
+        "End Time"
+      ],
+      "relativeTimeOrigin": "Earliest Start Time within each Test session when creating a relative-time copy."
     },
     {
       "name": "psych",
@@ -809,7 +845,7 @@
           {
             "name": "Question",
             "type": "string",
-            "description": "Full question text.",
+            "description": "Original item wording; third-party instrument rights apply. See NOTICE.md.",
             "constraints": {
               "required": true
             }
@@ -817,7 +853,7 @@
           {
             "name": "Answer",
             "type": "string",
-            "description": "Selected answer text.",
+            "description": "Selected answer wording; response observation and third-party answer-option rights are distinct. See NOTICE.md.",
             "constraints": {
               "required": true
             }
@@ -825,7 +861,7 @@
           {
             "name": "Score",
             "type": "integer",
-            "description": "Question score.",
+            "description": "Stored item code; scale variant, reverse-keying and aggregate scoring are not established by this schema.",
             "constraints": {
               "required": true,
               "minimum": 1,
@@ -844,7 +880,7 @@
           {
             "name": "Question Start Time",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "ISO timestamp string with UTC offset; timezone-aware UTC question boundary.",
             "constraints": {
               "required": true
             }
@@ -852,13 +888,24 @@
           {
             "name": "Question Answer Time",
             "type": "string",
-            "description": "Timestamp (string; sensor files use 'YYYY/MM/DD HH:MM:SS.fff', questionnaire files use ISO 'YYYY-MM-DD HH:MM:SS').",
+            "description": "ISO timestamp string with UTC offset; timezone-aware UTC question boundary.",
             "constraints": {
               "required": true
             }
           }
         ]
-      }
+      },
+      "description": "Session 1 item responses, stored codes and response times. Instrument wording and answer options retain third-party rights; permission status is unestablished.",
+      "timeZone": "UTC",
+      "timestampAwareness": "aware",
+      "timestampFields": [
+        "Question Start Time",
+        "Question Answer Time"
+      ],
+      "relativeTimeOrigin": "Earliest Question Start Time in the questionnaire when creating a relative-time copy."
     }
-  ]
+  ],
+  "licenseScope": "CC BY 4.0 applies to original data observations and authored documentation where the author holds rights. Third-party questionnaire wording and answer options, product images and trademarks remain outside that grant; redistribution permissions are not established. Source code is MIT. See NOTICE.md.",
+  "rightsNotice": "NOTICE.md",
+  "clockSynchronization": "No shared timezone or cross-resource synchronization has been established."
 }

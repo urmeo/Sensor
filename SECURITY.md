@@ -1,20 +1,13 @@
-# Security Policy
+# Security
 
-This repository is a sensor review with a small sample dataset and scripts that derive
-tables from committed CSVs. It runs no server, exposes no service, and ships no secrets or
-API keys.
+**Privacy · Reporting · Scripts · Support**
 
-## Participant privacy
+Local Python scripts and a single-participant sample; no network service is provided. Raw Session 1 and three-session eye summaries include sensitive observations.
 
-The sample data is a single consented session, published to make the derivations checkable.
-If you believe any committed file contains identifying information, please report it
-privately using the process below and it will be removed promptly.
+## Reporting
 
-## Supported versions
+Use a [private security advisory](https://github.com/urmeo/Sensor/security/advisories/new). Include the file path and a minimal synthetic reproduction. Keep participant responses, identifying details and consent documents out of public issues. Privacy reports will be reviewed with the data controller.
 
-Only the latest `main` is supported.
+## Supported version
 
-## Reporting a vulnerability
-
-Please report privately rather than opening a public issue: use the repository's
-**Security** tab, then **Report a vulnerability**, to open a private advisory.
+The current `main` is supported. Review [data ethics](DATA_ETHICS.md) and [rights](NOTICE.md) before sharing derived copies.

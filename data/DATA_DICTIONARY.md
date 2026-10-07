@@ -1,165 +1,116 @@
-# Data Dictionary
+# Data dictionary
 
-Column-level reference for every CSV in this folder. All files come from a single participant recorded across three sessions (2024-06-13, 2024-06-20, 2024-06-24). The raw sensor files (`hr.csv`, `ibi.csv`, `sed.csv`, `sed_fix.csv`) only cover Session 1 (June 13). `eye_metrics.csv` covers all three.
+**Signals · Clocks · Units · Provenance**
 
----
+One participant. Raw sensors and questionnaire responses cover Session 1; supplied eye summaries cover three sessions. [Schema](../datapackage.json) defines stored types and constraints. [Rights and corrections](../NOTICE.md) apply to every resource.
 
-## eye_metrics.csv
+| Resource | Rows | Scope |
+|---|---:|---|
+| `hr.csv` | 4,032 | Sampled heart-rate readings |
+| `ibi.csv` | 2,394 | Quantized interval readings |
+| `sed.csv` | 34,171 | Eye-tracking export |
+| `sed_fix.csv` | 34,171 | Original eye columns plus legacy segmentation |
+| `eye_metrics.csv` | 264 | 88 question summaries × 3 sessions |
+| `Psychometric_Test_Results.csv` | 88 | Session 1 item responses |
 
-Per-question summary of eye-tracking metrics for each psychometric question: pupil dilation and blink rate, computed from the eye tracker during each question interval. This is **not** heart-rate variability — the file was formerly, misleadingly, named `HRV.csv`.
+`sed.csv → legacy gaze runs → descriptive plots`
 
-| Column | Type | Range | Description |
-|--------|------|-------|-------------|
-| `Test` | string | `Test 01`, `Test 02`, `Test 03` | Session identifier (01 = June 13, 02 = June 20, 03 = June 24) |
-| `Type` | string | `HADS`, `STAI-S`, `STAI-T`, `BFI`, `FQ` | Psychometric test being administered |
-| `Start Time` | datetime | — | Timestamp when the question appeared on screen |
-| `End Time` | datetime | — | Timestamp when the participant answered |
-| `Score` | int | 0–6 | Numeric score for that question |
-| `Average Pupil Dilation` | float | 1.22–3.13 | Mean pupil diameter (mm) during the question interval |
-| `Average Left Blink Rate` | float | 0.0–254.05 | Left-eye blink rate (blinks/min) during the interval |
-| `Average Right Blink Rate` | float | 0.0–458.43 | Right-eye blink rate (blinks/min) during the interval |
-| `Pupil Dilation Increase` | string | `Yes` / `No` | Whether dilation increased relative to baseline |
-| `Left Blink Rate Increase` | string | `Yes` / `No` | Whether left blink rate increased relative to baseline |
-| `Right Blink Rate Increase` | string | `Yes` / `No` | Whether right blink rate increased relative to baseline |
+## Clocks
 
-**Notes:**
-- 264 data rows: 88 questions × 3 sessions.
-- Test 01 shows `Pupil Dilation Increase = Yes` for all 88 questions, while Tests 02–03 are mostly `No` — likely a baseline calibration or lighting difference across sessions.
-- Some blink rate values exceed 400 blinks/min. Normal resting blink rate is ~15–20 blinks/min. The extreme values may be artifacts from short measurement windows or signal noise.
+| Resource | Calendar fields | Source zone | Relative-copy origin |
+|---|---|---|---|
+| `hr`, `ibi`, `sed`, `sed_fix` | `datetime` | Naive; unspecified | Retain existing recording-relative `reltime` |
+| `eye_metrics` | `Start Time`, `End Time` | Naive; unspecified | Earliest start within each `Test` |
+| `psych` | `Question Start Time`, `Question Answer Time` | Aware; UTC | Earliest questionnaire start |
 
----
+- Source streams span about 535 seconds. Shared clock readings do not establish synchronization; timezone and acquisition clock mapping are missing.
+- The schema's `timeZone`, `timestampAwareness`, `timestampFields` and `relativeTimeOrigin` are custom descriptive metadata. Each resource is checked independently.
+- Relative copies remove calendar columns and retain sensitive responses and physiological patterns. See [data ethics](../DATA_ETHICS.md).
 
-## hr.csv
+## Heart rate and interval readings
 
-Continuous heart rate readings from chest-strap sensors, sampled at ~4 Hz per sensor (~7.5 Hz combined across the two active channels).
+| File | Column | Type | Stored range / meaning |
+|---|---|---|---|
+| Both | `reltime` | number | 0.001–534.892 s from recording start |
+| Both | `datetime` | string | Naive `YYYY/MM/DD HH:MM:SS.fff`; zone unspecified |
+| Both | `iSensor` | integer | Anonymous channel 0–5; device mapping unavailable |
+| `hr` | `confidence` | number | 0 or 1; `valid_hr` retains 1 |
+| `hr` | `heart_rate` | number | 0–73 BPM; zero represents no lock in supplied metadata |
+| `ibi` | `ibi` | integer | 0–1,093 ms; zero initialization values retained |
 
-| Column | Type | Range | Description |
-|--------|------|-------|-------------|
-| `reltime` | float | 0.001–534.892 | Seconds since recording start |
-| `datetime` | datetime | — | Absolute timestamp (ms precision) |
-| `iSensor` | int | 0–5 | Sensor index (see mapping below) |
-| `confidence` | float | 0.0 or 1.0 | Signal quality — 1.0 = valid reading, 0.0 = no signal |
-| `heart_rate` | float | 0.0–73.0 | Heart rate in BPM. Zero means no lock. |
+| Channel observation | Meaning |
+|---|---|
+| 3 and 5 | Active HR/interval channels; hardware identities unrecorded |
+| 0, 1, 2, 4 | Initialization rows without valid HR signal |
+| Interval counts | Channel 5: 1,809; channel 3: 581; four initialization rows |
 
-**Sensor mapping:**
-- `iSensor 3` and `iSensor 5` are the two active heart rate channels (likely Polar H10+ and Moofit HW401).
-- `iSensor 0, 1, 2, 4` each have a single initialization row at `reltime = 0.001` with `confidence = 0.0` — these channels did not produce valid data.
+Repeated/quantized interval readings are not a verified NN or R-R beat sequence. Reliable RMSSD/SDNN cannot be inferred from these samples. Reviewed Polar/Moofit devices do not establish channel identities; HW401 is optical PPG.
 
-**Notes:**
-- 4,032 data rows spanning ~535 seconds (~8 min 55 sec).
-- Heart rate stays in a narrow 59–73 BPM range, consistent with a seated participant answering questionnaires.
+## Eye stream: `sed.csv`
 
----
+The historical filename means “Smart Eye Data”. Recorded device, adapter, sampling configuration, coordinate units and calibration are undocumented.
 
-## ibi.csv
+| Column | Type | Stored range / meaning |
+|---|---|---|
+| `reltime` | number | 0.001–534.979 s from recording start |
+| `datetime` | string | Naive calendar clock; zone unspecified |
+| `iSensor` | integer | 0 |
+| `headPos.x`, `headPos.y`, `headPos.z` | number | All zero; coordinate units unknown |
+| `headPosQ` | number | All zero |
+| `headYaw`, `headPitch`, `headRoll` | number | All zero; angle units unknown |
+| `headRotQ` | number | All zero |
+| `gazeSrc.x`, `gazeSrc.y`, `gazeSrc.z` | number | Approximately −0.02 to 0.01; coordinate units unknown |
+| `gazeDir.x`, `gazeDir.y`, `gazeDir.z` | number | Reported gaze-direction components, approximately −0.3 to 1 |
+| `gazeQ` | number | Reported tracking quality, 0.11–1 |
+| `leftEyeOpen`, `rightEyeOpen` | number | Reported openness scale, 0–10 |
+| `leftEyeOpenQ`, `rightEyeOpenQ` | number | Reported quality, 0–1 |
+| `pupil` | number | 0–3.88; reported mm, calibration unavailable |
+| `pupilQ` | number | Reported measurement quality, 0–1 |
 
-Interval series from the heart-rate sensors. Note: these values are quantized and heavily forward-filled (most successive differences are exactly 0 ms), so they are **not** true beat-to-beat R-R intervals and are unsuitable for reliable time-domain HRV (RMSSD/SDNN).
+All-zero head fields have an unknown acquisition cause. `valid_pupil` keeps finite, positive pupil readings and finite quality values with `0.5 < pupilQ <= 1` by default. Its configurable cutoff must be finite and within 0–1. This is a descriptive filter, not a validated anxiety rule.
 
-| Column | Type | Range | Description |
-|--------|------|-------|-------------|
-| `reltime` | float | 0.001–534.892 | Seconds since recording start |
-| `datetime` | datetime | — | Absolute timestamp (ms precision) |
-| `iSensor` | int | 0–5 | Sensor index (same mapping as `hr.csv`) |
-| `ibi` | int | 0–1093 | Inter-beat interval in milliseconds. Zero = initialization row. |
+## Legacy runs: `sed_fix.csv`
 
-**Notes:**
-- 2,394 data rows. Sensor 5 contributed 1,809 readings, sensor 3 contributed 581.
-- Non-zero IBI values range from 478–1,093 ms, corresponding to ~55–125 BPM.
-- Typical values cluster around 800–1,000 ms (60–75 BPM), consistent with `hr.csv`.
+All 24 source columns are retained.
 
----
+| Added column | Type | Definition |
+|---|---|---|
+| `gaze_diff` | number | Euclidean displacement between consecutive direction vectors; first row null; dimensionless |
+| `fixation` | boolean | `gaze_diff < 0.01`; first row false |
+| `fixation_id` | integer | 1-based ID for every contiguous true **or** false run |
+| `duration` | number | Last-minus-first `reltime` in a true run, repeated on its rows; null for false runs |
 
-## Psychometric_Test_Results.csv
+- Existing observations: 30,289 true samples; 2,479 true runs; 4,958 total runs; true-run spans 0–1.938 s.
+- This low-movement heuristic has no quality, gap or minimum-duration rule. False samples are not measured saccades.
+- Reproduction compares derived numbers with `rtol=0`, `atol=1e-9`. The source CSV remains unchanged.
 
-Question-level responses from Session 1 (June 13 only).
+## Supplied summaries: `eye_metrics.csv`
 
-| Column | Type | Range | Description |
-|--------|------|-------|-------------|
-| `Test` | string | `HADS`, `STAI-S`, `STAI-T`, `BFI`, `FQ` | Psychometric test name |
-| `Question` | string | — | Full question text |
-| `Answer` | string | — | Selected answer (text) |
-| `Score` | int | 1–6 | Numeric score for that question |
-| `Time(s)` | float | 2.016–22.737 | Response time in seconds |
-| `Question Start Time` | ISO datetime | — | When the question was displayed |
-| `Question Answer Time` | ISO datetime | — | When the participant submitted their answer |
+Previously named `HRV.csv`; these are eye summaries. Aggregation code, baseline intervals, blink-event rules and calibrated pupil scale are unavailable.
 
-**Notes:**
-- 88 rows: HADS (14), STAI-S (20), STAI-T (20), BFI (10), FQ (24).
-- Only Session 1 data. Sessions 2 and 3 questionnaire data is not in this folder.
-- 7 columns including Score.
+| Column | Type | Supplied meaning |
+|---|---|---|
+| `Test` | string | `Test 01`, `Test 02`, `Test 03` |
+| `Type` | string | `HADS`, `STAI-S`, `STAI-T`, `BFI`, `FQ` |
+| `Start Time`, `End Time` | string | Supplied question boundaries; naive clock |
+| `Score` | integer | Stored item code, 0–6 |
+| `Average Pupil Dilation` | number | 1.22–3.13; reported mm; diameter versus baseline change unverified |
+| `Average Left Blink Rate` | number | 0–254.05; reported blinks/min |
+| `Average Right Blink Rate` | number | 0–458.43; reported blinks/min |
+| `Pupil Dilation Increase` | string | Supplied `Yes`/`No` flag |
+| `Left Blink Rate Increase`, `Right Blink Rate Increase` | string | Supplied `Yes`/`No` flags |
 
----
+Session 1 has 88 “Yes” pupil flags. Their cause is unknown. Large blink values and all flags remain as supplied; no clinical threshold or silent cleaning is applied. Raw Sessions 2–3 are unavailable, and clock correspondence alone does not reproduce summaries.
 
-## sed.csv
+## Responses: `Psychometric_Test_Results.csv`
 
-Raw eye tracking data from the Pupil Labs Core, recorded at ~60 Hz. The "sed" filename stands for Smart Eye Data.
+| Column | Type | Stored meaning |
+|---|---|---|
+| `Test` | string | HADS 14; STAI-S 20; STAI-T 20; BFI 10; FQ 24 rows |
+| `Question` | string | Original instrument wording; third-party rights |
+| `Answer` | string | Selected wording; third-party answer-option rights remain |
+| `Score` | integer | Stored item code, 1–6; keyed scoring unestablished |
+| `Time(s)` | number | Response duration, 2.016–22.737 s |
+| `Question Start Time`, `Question Answer Time` | string | ISO timestamps with UTC offset |
 
-| Column | Type | Range | Description |
-|--------|------|-------|-------------|
-| `reltime` | float | 0.001–534.979 | Seconds since recording start |
-| `datetime` | datetime | — | Absolute timestamp |
-| `iSensor` | int | always 0 | Eye tracker sensor index |
-| `headPos.x`, `headPos.y`, `headPos.z` | float | all 0.0 | Head position in 3D space (not tracked in this setup) |
-| `headPosQ` | float | 0.0 | Head position quality |
-| `headYaw`, `headPitch`, `headRoll` | float | all 0.0 | Head rotation angles (not tracked) |
-| `headRotQ` | float | 0.0 | Head rotation quality |
-| `gazeSrc.x`, `gazeSrc.y`, `gazeSrc.z` | float | ~−0.02 to 0.01 | Gaze origin point (eye position in tracker coordinates) |
-| `gazeDir.x`, `gazeDir.y`, `gazeDir.z` | float | ~−0.3 to 1.0 | Gaze direction unit vector |
-| `gazeQ` | float | 0.11–1.0 | Gaze tracking quality (1.0 = best) |
-| `leftEyeOpen` | float | 0.0–10.0 | Left eye openness (0 = closed, 10 = fully open) |
-| `leftEyeOpenQ` | float | 0.0–1.0 | Left eye openness quality |
-| `rightEyeOpen` | float | 0.0–10.0 | Right eye openness |
-| `rightEyeOpenQ` | float | 0.0–1.0 | Right eye openness quality |
-| `pupil` | float | 0.0–3.88 | Pupil diameter in mm |
-| `pupilQ` | float | 0.0–1.0 | Pupil measurement quality |
-
-**Notes:**
-- 34,171 data rows at ~60 Hz over ~535 seconds.
-- Head position and rotation are all zeros — either the setup used a fixed head rest or head tracking was disabled.
-- Pupil diameter typically falls in the 2.0–3.5 mm range. Values of 0.0 indicate tracking loss.
-
----
-
-## sed_fix.csv
-
-Post-processed version of `sed.csv` with fixation detection applied. Contains all the same raw columns plus four derived columns for gaze analysis.
-
-All columns from `sed.csv` carry over, plus:
-
-| Column | Type | Range | Description |
-|--------|------|-------|-------------|
-| `gaze_diff` | float | 0.0–1.583 | Euclidean distance between consecutive gaze direction vectors — a saccade/movement metric |
-| `fixation` | bool | `True` / `False` | Whether the gaze point is part of a fixation (`True`) or a saccade (`False`) |
-| `fixation_id` | int | 1–4958 | Sequential ID for each contiguous run (fixation OR non-fixation); a run is a fixation only when `fixation` is True |
-| `duration` | float | 0.0–1.938 | Fixation duration in seconds (only populated when `fixation = True`) |
-
-**Notes:**
-- Same 34,171 rows as `sed.csv`.
-- 88.6% of samples are classified as fixations (30,289 of 34,171).
-- 2,479 distinct fixation events were detected (of 4,958 total contiguous runs — the other 2,479 are non-fixation/saccade runs, since fixation_id counts runs of either kind).
-- Fixation durations range from near-zero to ~1.94 seconds.
-
----
-
-## Cross-File Relationships
-
-All sensor files share the same recording window: **2024-06-13, 11:30:10 – 11:39:05** (~535 seconds, Session 1 only).
-
-```
-Psychometric_Test_Results.csv   (question-level answers, Session 1)
-        ↕ aligned timestamps
-eye_metrics.csv                         (per-question biometric summaries, Sessions 1–3)
-        ↑ aggregated from
-sed.csv / sed_fix.csv           (~60 Hz eye tracking)
-hr.csv                          (~4 Hz/sensor heart rate)
-ibi.csv                         (inter-beat interval series — quantized)
-```
-
-**Sensor index (`iSensor`) mapping across files:**
-
-| iSensor | Device | Files |
-|---------|--------|-------|
-| 0 | Eye tracker (Pupil Labs Core) | sed.csv, sed_fix.csv |
-| 3 | Heart rate sensor (likely Polar H10+ or Moofit) | hr.csv, ibi.csv |
-| 5 | Heart rate sensor (likely Polar H10+ or Moofit) | hr.csv, ibi.csv |
-| 1, 2, 4 | Unused / no valid data | initialization rows only |
+Variant, reverse-keying and aggregate-score provenance are missing. These codes are not validated scale totals. Time fields are checked against `Time(s)` within 0.001 s; longer responses do not establish deliberation, avoidance or anxiety.

@@ -1,28 +1,13 @@
-# OS files
 .DS_Store
-Thumbs.db
-
-# Backups
-Sensor_bak/
-
-# Environment
-venv/
 .venv/
-
-# Python
+venv/
+Sensor_bak/
 __pycache__/
-*.pyc
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
-
-# Packaging / build artifacts
+*.py[cod]
+.*_cache/
 *.egg-info/
 build/
 dist/
-
-# Jupyter
 .ipynb_checkpoints/
-
-# Generated de-identified data variant (scripts/shift_time.py)
 data/relative/
+outputs/

@@ -1,13 +1,11 @@
-"""Loaders and quality filters for the Sensor sample dataset.
-
-Keeps data-access logic in one place so the analysis notebook and the test
-suite share the same loading and filtering rules instead of copy-pasting them.
-"""
+"""Load source CSVs and apply the recorded quality flags."""
 
 from __future__ import annotations
 
+from numbers import Real
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 DATA_DIR: Path = Path(__file__).resolve().parent / "data"
@@ -29,7 +27,14 @@ def data_dir(base: str | Path | None = None) -> Path:
 def load(name: str, base: str | Path | None = None) -> pd.DataFrame:
     if name not in CSV_FILES:
         raise KeyError(f"unknown dataset {name!r}; valid names: {sorted(CSV_FILES)}")
-    return pd.read_csv(data_dir(base) / CSV_FILES[name])
+    path = data_dir(base) / CSV_FILES[name]
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"Dataset {name!r} not found at {path}. CSVs are not bundled in installed wheels. "
+            "Use a source checkout or load(..., base=CSV_DIRECTORY); "
+            "module CLIs accept --data-dir CSV_DIRECTORY."
+        )
+    return pd.read_csv(path)
 
 
 def load_all(base: str | Path | None = None) -> dict[str, pd.DataFrame]:
@@ -37,17 +42,54 @@ def load_all(base: str | Path | None = None) -> dict[str, pd.DataFrame]:
 
 
 def valid_hr(hr: pd.DataFrame) -> pd.DataFrame:
-    """Heart-rate rows the sensor was confident about."""
+    """Rows with the recorded confidence flag equal to one."""
     return hr[hr["confidence"] == 1.0].copy()
 
 
 def valid_pupil(eye: pd.DataFrame, min_quality: float = 0.5) -> pd.DataFrame:
-    """Eye-tracking rows with a real pupil reading (drops tracking loss)."""
-    return eye[(eye["pupil"] > 0) & (eye["pupilQ"] > min_quality)].copy()
+    """Finite positive pupil/quality readings above a cutoff in [0, 1]."""
+    if isinstance(min_quality, (bool, np.bool_)) or not isinstance(min_quality, Real):
+        raise ValueError("min_quality must be a finite numeric scalar in [0, 1]")
+    try:
+        cutoff = float(min_quality)
+    except (ValueError, OverflowError) as error:
+        raise ValueError("min_quality must be a finite numeric scalar in [0, 1]") from error
+    if not np.isfinite(cutoff) or not 0 <= cutoff <= 1:
+        raise ValueError("min_quality must be a finite numeric scalar in [0, 1]")
+    numeric = [pd.to_numeric(eye[column], errors="coerce") for column in ("pupil", "pupilQ")]
+    if any(pd.api.types.is_complex_dtype(values) for values in numeric):
+        raise ValueError("pupil and pupilQ must contain real measurements")
+    pupil, quality = [values.to_numpy(dtype=float, na_value=np.nan) for values in numeric]
+    keep = (
+        np.isfinite(pupil)
+        & np.isfinite(quality)
+        & (pupil > 0)
+        & (quality > cutoff)
+        & (quality <= 1)
+    )
+    return eye.loc[keep].copy()
 
 
 def fixation_durations(sed_fix: pd.DataFrame) -> pd.Series:
-    """Duration (seconds) of each multi-sample fixation; single-sample runs
-    (which have zero measured span) are excluded."""
+    """Positive spans of legacy low-movement runs, excluding zero-span runs."""
     durations = sed_fix[sed_fix["fixation"]].groupby("fixation_id")["duration"].max()
     return durations[durations > 0]
+
+
+def validate_output_path(path: str | Path, base: str | Path | None = None) -> Path:
+    """Reject destinations that alias any source CSV, including links."""
+    destination = Path(path)
+    sources = [data_dir(base) / filename for filename in CSV_FILES.values()]
+    sources.extend(
+        DATA_DIR / filename for filename in CSV_FILES.values() if (DATA_DIR / filename).exists()
+    )
+    try:
+        resolved = destination.resolve()
+        for source in sources:
+            if resolved == source.resolve() or (
+                destination.exists() and source.exists() and destination.samefile(source)
+            ):
+                raise ValueError(f"Output would overwrite source CSV: {source}")
+    except (OSError, RuntimeError) as error:
+        raise ValueError(f"Cannot resolve output or source CSV path: {error}") from error
+    return destination

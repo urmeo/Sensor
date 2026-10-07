@@ -1,43 +1,14 @@
-"""Reproduce the derived data files from the raw sensor recordings.
+"""Reproduce legacy low-movement runs from consecutive gaze-vector displacement.
 
-Right now this covers the eye-tracking fixation pipeline, which is fully
-reproducible from the shipped raw file:
-
-    data/sed.csv  --detect_fixations-->  data/sed_fix.csv
-
-`detect_fixations` adds the four derived columns (`gaze_diff`, `fixation`,
-`fixation_id`, `duration`) and is verified to reproduce the committed
-`sed_fix.csv` exactly (see tests/test_derive.py).
-
-Algorithm
----------
-- gaze_diff : Euclidean distance between consecutive gaze-direction unit
-  vectors (`gazeDir.{x,y,z}`); undefined (NaN) on the first row.
-- fixation  : True when gaze_diff < THRESHOLD (0.01), i.e. the gaze barely
-  moved between samples; NaN gaze_diff counts as not-a-fixation.
-- fixation_id : a 1-based segment counter that increments at every transition
-  between fixation and non-fixation, so each contiguous run (of either kind)
-  gets its own id.
-- duration  : for each fixation run, the elapsed time (last - first reltime)
-  of that run, broadcast to every row in the run; NaN on non-fixation rows.
-
-Not covered
------------
-`eye_metrics.csv` (per-question pupil/blink summaries) is NOT reproduced here: it spans
-three sessions but only Session 1 raw data is shipped, and its timestamps sit on
-a different clock offset from `sed.csv` (the notebook aligns them by subtracting
-the sed start timestamp, a direct wall-clock offset). Blink-rate extraction from
-eye-openness is also undocumented upstream.
-Reproducing it would be guesswork, so it is intentionally left out rather than
-shipped as an unverifiable derivation.
-
-Run `python scripts/derive.py --check` to confirm the pipeline still matches the
-committed file.
+The 0.01 cutoff is unvalidated and has no quality, gap or minimum-duration rule.
+Run spans use last minus first reltime. The comparison tolerance is 1e-9.
 """
 
 from __future__ import annotations
 
+import argparse
 import sys
+from numbers import Real
 from pathlib import Path
 
 import numpy as np
@@ -47,51 +18,109 @@ import sensor_data as sd
 
 THRESHOLD: float = 0.01
 DERIVED_COLUMNS: list[str] = ["gaze_diff", "fixation", "fixation_id", "duration"]
+REQUIRED_COLUMNS: list[str] = ["gazeDir.x", "gazeDir.y", "gazeDir.z", "reltime"]
 
 
 def detect_fixations(sed: pd.DataFrame, threshold: float = THRESHOLD) -> pd.DataFrame:
-    """Add fixation columns to a raw `sed` frame and return the `sed_fix` frame."""
+    """Return a copy with the four historical derived columns."""
+    if isinstance(threshold, (bool, np.bool_)) or not isinstance(threshold, Real):
+        raise ValueError("threshold must be a finite nonnegative numeric scalar")
+    try:
+        cutoff = float(threshold)
+    except (ValueError, OverflowError) as error:
+        raise ValueError("threshold must be a finite nonnegative numeric scalar") from error
+    if not np.isfinite(cutoff) or cutoff < 0:
+        raise ValueError("threshold must be a finite nonnegative numeric scalar")
+    missing = set(REQUIRED_COLUMNS) - set(sed.columns)
+    if missing:
+        raise ValueError(f"Missing required columns: {sorted(missing)}")
+    if not sed.columns.is_unique:
+        raise ValueError("Input columns must be unique")
+    if sed.empty:
+        empty = sed.copy()
+        for column, dtype in zip(DERIVED_COLUMNS, (float, bool, np.int64, float), strict=True):
+            empty[column] = pd.Series(index=sed.index, dtype=dtype)
+        return empty
+    for column in REQUIRED_COLUMNS:
+        if (
+            not pd.api.types.is_numeric_dtype(sed[column])
+            or pd.api.types.is_bool_dtype(sed[column])
+            or pd.api.types.is_complex_dtype(sed[column])
+        ):
+            raise ValueError(f"{column} must contain finite real numeric values")
+        if sed[column].isna().any() or not np.isfinite(sed[column]).all():
+            raise ValueError(f"{column} must contain finite numeric values")
+    times = sed["reltime"]
+    if (times < 0).any() or not times.is_monotonic_increasing:
+        raise ValueError("reltime must be nonnegative and nondecreasing")
+
     df = sed.copy()
-
-    vectors = df[["gazeDir.x", "gazeDir.y", "gazeDir.z"]].to_numpy()
-    step = np.sqrt(((vectors[1:] - vectors[:-1]) ** 2).sum(axis=1))
-    df["gaze_diff"] = np.concatenate([[np.nan], step])
-
-    df["fixation"] = df["gaze_diff"] < threshold
-
+    vectors = sed[REQUIRED_COLUMNS[:3]].to_numpy(dtype=float)
+    with np.errstate(over="ignore", invalid="ignore"):
+        step = np.sqrt(((vectors[1:] - vectors[:-1]) ** 2).sum(axis=1))
+    if not np.isfinite(step).all():
+        raise ValueError("Gaze displacement exceeds the finite numeric range")
+    df["gaze_diff"] = np.concatenate([[np.nan], step])[: len(df)]
+    df["fixation"] = df["gaze_diff"] < cutoff
     transition = df["fixation"].ne(df["fixation"].shift()).to_numpy(copy=True)
-    transition[0] = False
+    if len(transition):
+        transition[0] = False
     df["fixation_id"] = np.cumsum(transition) + 1
-
     reltime = df.groupby("fixation_id")["reltime"]
     span = reltime.transform("last") - reltime.transform("first")
     df["duration"] = span.where(df["fixation"])
-
     return df
 
 
 def check(base: str | Path | None = None) -> bool:
-    """Return True if detect_fixations(sed) reproduces the committed sed_fix."""
+    """Compare source columns exactly and derived floats within atol=1e-9."""
     derived = detect_fixations(sd.load("sed", base))
     committed = sd.load("sed_fix", base)
-    if list(derived.columns) != list(committed.columns):
+    if len(derived) != len(committed) or list(derived.columns) != list(committed.columns):
         return False
-    for col in committed.columns:
-        a, b = derived[col], committed[col]
-        if col in ("gaze_diff", "duration"):
-            ok = np.allclose(a.to_numpy(), b.to_numpy(), rtol=0, atol=1e-9, equal_nan=True)
+    if derived.empty:
+        return True
+    for column in committed.columns:
+        actual, expected = derived[column], committed[column]
+        if column in ("gaze_diff", "duration"):
+            try:
+                matches = np.allclose(
+                    actual.to_numpy(), expected.to_numpy(), rtol=0, atol=1e-9, equal_nan=True
+                )
+            except (TypeError, ValueError):
+                return False
         else:
-            ok = a.equals(b)
-        if not ok:
+            matches = actual.equals(expected)
+        if not matches:
             return False
     return True
 
 
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Check legacy gaze runs or write them to an explicit output path.",
+        allow_abbrev=False,
+    )
+    parser.add_argument("--data-dir", type=Path, help="Directory containing the source CSVs")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--check", action="store_true", help="Read-only comparison (the default)")
+    modes.add_argument("--output", type=Path, help="Write derived rows to a separate CSV path")
+    args = parser.parse_args(argv)
+    try:
+        if args.output is None:
+            matches = check(args.data_dir)
+            print(f"matches sed_fix.csv (atol=1e-9): {matches}")
+            return 0 if matches else 1
+        destination = sd.validate_output_path(args.output, args.data_dir)
+        out = detect_fixations(sd.load("sed", args.data_dir))
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        out.to_csv(destination, index=False)
+        print(f"wrote {destination} ({len(out)} rows)")
+        return 0
+    except (OSError, ValueError, KeyError) as error:
+        print(f"derive: {error}", file=sys.stderr)
+        return 1
+
+
 if __name__ == "__main__":
-    if "--check" in sys.argv:
-        print("reproduces sed_fix.csv exactly:", check())
-    else:
-        out = detect_fixations(sd.load("sed"))
-        dest = sd.DATA_DIR / "sed_fix.csv"
-        out.to_csv(dest, index=False)
-        print(f"wrote {dest} ({len(out)} rows)")
+    raise SystemExit(main())

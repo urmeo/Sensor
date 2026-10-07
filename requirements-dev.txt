@@ -1,4 +1,4 @@
-# Test / CI tooling; runtime deps come via the single lock below.
+# Development dependencies; runtime pins are included below.
 -r requirements.txt
 pytest==9.1.1
 nbformat==5.10.4

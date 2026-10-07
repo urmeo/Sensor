@@ -1,21 +1,19 @@
 {
-  "title": "Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research",
-  "description": "A comparative review of eleven sensors and two software platforms used in anxiety-detection research, spanning eye tracking, heart rate, skin conductance, video, and motion capture. Includes device specifications, comparisons, and sample physiological data from a single consenting participant.",
+  "title": "Sensor: sensor review and single-participant sample",
+  "description": "Review of eleven devices and two software platforms with six CSV resources from one participant. Raw sensor and questionnaire observations cover Session 1; supplied eye summaries cover three sessions. The author reports consent for research and educational sharing. Analysis is descriptive; acquisition, calibration and cross-stream synchronization provenance are missing. CC BY 4.0 covers original observations and authored documentation where rights are held. Code is MIT. Third-party questionnaire wording, answer options, product images and trademarks remain outside that grant; open instrument redistribution permission is unestablished. See NOTICE.md and DATA_ETHICS.md. Metadata alone establishes no deposited record or DOI.",
   "upload_type": "dataset",
   "access_right": "open",
   "license": "cc-by-4.0",
   "creators": [
-    { "name": "Bose, Urme" }
+    {
+      "name": "Bose, Urme"
+    }
   ],
   "keywords": [
-    "anxiety-detection",
-    "biometric-sensors",
+    "sensor-review",
+    "sample-data",
     "eye-tracking",
-    "heart-rate-variability",
-    "electrodermal-activity",
-    "galvanic-skin-response",
-    "multimodal-sensing",
-    "psychometric-testing"
+    "psychometrics"
   ],
   "related_identifiers": [
     {

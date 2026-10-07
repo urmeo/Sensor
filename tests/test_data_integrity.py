@@ -1,21 +1,20 @@
-"""Lightweight data smoke test: every committed CSV must load and be non-trivial.
+"""Smoke-test only the six declared source CSVs."""
 
-Catches corrupted, truncated, or empty data files before they silently break a
-notebook. CSVs are discovered automatically, so newly committed data is covered
-without touching this test.
-"""
-
+import json
 from pathlib import Path
 
 import pandas as pd
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CSV_FILES = sorted(p for p in ROOT.rglob("*.csv") if ".ipynb_checkpoints" not in p.parts)
+PACKAGE = json.loads((ROOT / "datapackage.json").read_text())
+CSV_FILES = [ROOT / resource["path"] for resource in PACKAGE["resources"]]
 
 
 def test_csv_files_present():
-    assert CSV_FILES, "No CSV files found in the repository."
+    assert len(CSV_FILES) == 6
+    assert len(set(CSV_FILES)) == len(CSV_FILES)
+    assert all(path.is_file() for path in CSV_FILES)
 
 
 @pytest.mark.parametrize("path", CSV_FILES, ids=[str(p.relative_to(ROOT)) for p in CSV_FILES])

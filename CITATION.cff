@@ -1,8 +1,8 @@
 cff-version: 1.2.0
-message: "If you use this resource, please cite it as below."
+message: "Cite this resource; see NOTICE.md for mixed license scopes and instrument rights."
 type: dataset
-title: "Sensor: A Review of Sensors and Software Platforms for Anxiety-Detection Research"
-version: 0.1.0
+title: "Sensor: sensor review and single-participant sample"
+version: 0.1.1
 url: "https://github.com/urmeo/Sensor"
 repository-code: "https://github.com/urmeo/Sensor"
 license:
@@ -13,16 +13,17 @@ authors:
     given-names: Urme
     alias: urmeo
 keywords:
-  - anxiety-detection
-  - biometric-sensors
+  - sensor-review
+  - sample-data
   - eye-tracking
-  - heart-rate-variability
-  - electrodermal-activity
-  - galvanic-skin-response
-  - multimodal-sensing
-  - psychometric-testing
+  - psychometrics
 abstract: >-
-  A comparative review of eleven sensors and two software platforms used
-  in anxiety-detection research, spanning eye tracking, heart rate,
-  skin conductance, video, and motion capture. Includes device
-  specifications, comparisons, and sample physiological data.
+  Review of eleven devices and two software platforms, with six CSV resources
+  from one participant. Raw sensor and questionnaire observations cover
+  Session 1; supplied eye summaries cover three sessions. Analysis is
+  descriptive, with missing acquisition, calibration and synchronization
+  provenance. Code is MIT; original data observations and authored
+  documentation are CC BY 4.0 where the author holds rights. Questionnaire
+  wording, answer options and product media retain third-party rights;
+  open instrument redistribution permission is unestablished. See NOTICE.md
+  and DATA_ETHICS.md. Metadata alone establishes no deposited record or DOI.

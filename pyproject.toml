@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sensor-anxiety-dataset"
-version = "0.1.0"
-description = "Biometric sensor review and sample dataset for anxiety-detection research."
+version = "0.1.1"
+description = "Sensor review and descriptive analysis of a one-participant sample."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -45,7 +45,7 @@ target-version = "py311"
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.ruff.lint.per-file-ignores]
-"*.ipynb" = ["E501"]  # exploratory notebook: long palette dicts / plot titles are fine
+"*.ipynb" = ["E501"]
 
 [tool.mypy]
 python_version = "3.11"
