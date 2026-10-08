@@ -35,7 +35,7 @@ python -m scripts.derive --check --data-dir data
 python -m scripts.shift_time --data-dir data --output-dir outputs/relative
 ```
 
-Derivation defaults to a read-only check; `--output PATH` explicitly creates a derived file. Relative export requires `--output-dir`, validates all six resources first and refuses source overwrite. `--data-dir` means the folder containing the CSVs. Generated `outputs/` stays untracked; relative copies remain sensitive.
+Derivation defaults to a read-only check; `--output PATH` explicitly creates a derived file. Relative export requires `--output-dir`, validates all six resources first and refuses source overwrite. `--data-dir` means the folder containing the CSVs. New exports stay untracked; the existing README figures are versioned. Relative copies remain sensitive.
 
 ## Changes
 
