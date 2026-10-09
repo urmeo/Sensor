@@ -9,8 +9,7 @@ license:
   - MIT
   - CC-BY-4.0
 authors:
-  - family-names: Bose
-    given-names: Urme
+  - given-names: Urme
     alias: urmeo
 keywords:
   - sensor-review
